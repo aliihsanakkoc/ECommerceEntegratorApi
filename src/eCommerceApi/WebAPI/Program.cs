@@ -1,6 +1,7 @@
 using Application;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.OData;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.WebApi.Extensions;
@@ -18,7 +19,10 @@ using WebAPI;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddResponseCompression(opt => opt.EnableForHttps=true);
+
+builder.Services.AddControllers().AddOData(opt => opt.EnableQueryFeatures());
+
 builder.Services.AddApplicationServices(
     mailSettings: builder.Configuration.GetSection("MailSettings").Get<MailSettings>()
         ?? throw new InvalidOperationException("MailSettings section cannot found in configuration."),
@@ -85,6 +89,8 @@ builder.Services.AddSwaggerGen(opt =>
 
 WebApplication app = builder.Build();
 
+app.UseResponseCompression();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -95,7 +101,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-if (app.Environment.IsProduction())
+//if (app.Environment.IsProduction())
     app.ConfigureCustomExceptionMiddleware();
 
 app.UseDbMigrationApplier();

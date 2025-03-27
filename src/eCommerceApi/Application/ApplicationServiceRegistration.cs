@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
 using Application.Services.UsersService;
@@ -20,6 +20,14 @@ using NArchitecture.Core.Mailing;
 using NArchitecture.Core.Mailing.MailKit;
 using NArchitecture.Core.Security.DependencyInjection;
 using NArchitecture.Core.Security.JWT;
+using Application.Services.Categories;
+using Application.Services.Products;
+using Application.Services.CategoryProducts;
+using Application.Services.Variants;
+using Application.Services.VariantProducts;
+using Application.Services.Books;
+using Application.Services.Clothings;
+using Application.Services.Foods;
 
 namespace Application;
 
@@ -61,6 +69,16 @@ public static class ApplicationServiceRegistration
 
         services.AddSecurityServices<Guid, int, Guid>(tokenOptions);
 
+        services.AddScoped<ICategoryService, CategoryManager>();
+        services.AddScoped<IProductService, ProductManager>();
+        services.AddScoped<ICategoryProductService, CategoryProductManager>();
+        services.AddScoped<IProductService, ProductManager>();
+        services.AddScoped<IProductService, ProductManager>();
+        services.AddScoped<IVariantService, VariantManager>();
+        services.AddScoped<IVariantProductService, VariantProductManager>();
+        services.AddScoped<IBookService, BookManager>();
+        services.AddScoped<IClothingService, ClothingManager>();
+        services.AddScoped<IFoodService, FoodManager>();
         return services;
     }
 
