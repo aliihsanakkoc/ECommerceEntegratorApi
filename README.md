@@ -20,3 +20,9 @@ Possibility to create unlimited categories with one-to-many related Top/Sub leve
 Creating unlimited product types (Book, Clothing, Food) using IProduct signature interface (null interface) and ProductId Foreign Key.
 Possibility to create unlimited variants (in dictionary logic) with one-to-many related Top/Sub levels by combining strings onto itself.
 Possibility to define unlimited variants and unlimited categories for the Product
+
+### Video
+
+You can watch the video of the project from the link below.
+
+[![](https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://www.youtube.com/watch?v=DelTuYarY_s&list=PLA6LuuK373wvHoIAMNRSL45In4qRz6csF)
