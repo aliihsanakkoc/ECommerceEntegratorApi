@@ -19,7 +19,8 @@ To get a local copy up and running follow these simple steps.
 Possibility to create unlimited categories with one-to-many related Top/Sub levels by combining strings onto itself.
 Creating unlimited product types (Book, Clothing, Food) using IProduct signature interface (null interface) and ProductId Foreign Key.
 Possibility to create unlimited variants (in dictionary logic) with one-to-many related Top/Sub levels by combining strings onto itself.
-Possibility to define unlimited variants and unlimited categories for the Product
+Possibility to define unlimited variants and unlimited categories for the Product.
+OData implementation for Joker Endpoint.
 
 ### Video
 
