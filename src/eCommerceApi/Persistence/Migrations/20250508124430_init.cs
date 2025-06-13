@@ -456,7 +456,7 @@ namespace Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AuthenticatorType", "CreatedDate", "DeletedDate", "Email", "PasswordHash", "PasswordSalt", "UpdatedDate" },
-                values: new object[] { new Guid("6112d8ff-0e3b-491a-b9e5-9ca2ecb8ae52"), 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "narch@kodlama.io", new byte[] { 211, 26, 116, 43, 63, 60, 127, 54, 41, 241, 39, 224, 24, 79, 71, 148, 104, 188, 253, 188, 81, 85, 211, 233, 45, 67, 116, 11, 18, 34, 209, 139, 42, 213, 111, 123, 125, 231, 240, 35, 83, 163, 42, 84, 162, 87, 148, 86, 101, 50, 119, 52, 252, 101, 179, 138, 21, 20, 158, 151, 143, 204, 198, 8 }, new byte[] { 22, 143, 108, 203, 74, 248, 207, 92, 99, 65, 0, 109, 10, 87, 240, 34, 123, 250, 19, 192, 104, 86, 35, 179, 168, 34, 207, 141, 251, 236, 94, 93, 108, 253, 239, 140, 169, 213, 32, 83, 192, 103, 63, 22, 46, 172, 125, 190, 53, 148, 112, 249, 29, 200, 73, 169, 73, 83, 12, 123, 74, 34, 139, 149, 51, 242, 139, 146, 127, 187, 185, 64, 203, 223, 134, 21, 209, 199, 52, 115, 90, 105, 89, 55, 190, 159, 210, 215, 207, 148, 31, 119, 252, 61, 102, 23, 251, 121, 15, 178, 180, 148, 113, 25, 221, 15, 187, 25, 149, 237, 216, 99, 113, 199, 58, 211, 6, 115, 72, 165, 27, 50, 74, 187, 51, 5, 28, 230 }, null });
+                values: new object[] { new Guid("c58bfc3c-97bc-4334-aa88-faa9d3b56780"), 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "narch@kodlama.io", new byte[] { 255, 44, 33, 254, 90, 195, 171, 59, 201, 194, 162, 178, 136, 104, 176, 221, 106, 188, 238, 227, 23, 55, 139, 139, 209, 135, 53, 136, 214, 20, 58, 110, 55, 231, 31, 255, 47, 87, 195, 172, 27, 81, 176, 188, 233, 129, 44, 202, 189, 207, 141, 104, 54, 135, 235, 1, 7, 89, 102, 29, 131, 171, 36, 63 }, new byte[] { 141, 145, 223, 230, 72, 55, 211, 197, 57, 133, 92, 203, 53, 161, 147, 59, 34, 131, 242, 210, 114, 22, 249, 1, 173, 74, 251, 225, 76, 102, 115, 116, 212, 104, 122, 111, 207, 87, 146, 60, 102, 187, 94, 111, 106, 237, 84, 6, 241, 242, 15, 5, 70, 30, 228, 115, 77, 138, 187, 1, 239, 6, 200, 37, 27, 208, 126, 216, 31, 25, 246, 74, 94, 246, 229, 25, 13, 194, 146, 180, 193, 31, 203, 104, 147, 115, 178, 100, 72, 103, 253, 95, 213, 204, 163, 130, 32, 80, 164, 98, 8, 11, 92, 62, 63, 142, 223, 48, 255, 99, 221, 173, 81, 25, 198, 124, 209, 238, 222, 233, 90, 194, 0, 215, 78, 173, 128, 9 }, null });
 
             migrationBuilder.InsertData(
                 table: "Variants",
@@ -466,7 +466,7 @@ namespace Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "UserOperationClaims",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "OperationClaimId", "UpdatedDate", "UserId" },
-                values: new object[] { new Guid("2f591204-3c3e-44a1-b17a-0ab3daeebdaf"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 1, null, new Guid("6112d8ff-0e3b-491a-b9e5-9ca2ecb8ae52") });
+                values: new object[] { new Guid("8534159e-c9d0-465d-b7ce-139f60674bb3"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 1, null, new Guid("c58bfc3c-97bc-4334-aa88-faa9d3b56780") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Books_ProductId",

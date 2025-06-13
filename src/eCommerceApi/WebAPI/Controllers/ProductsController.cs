@@ -7,6 +7,8 @@ using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Application.Features.Products.ProductType;
+using Application.Features.Products.ODataQuery;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace WebAPI.Controllers;
 
@@ -56,6 +58,16 @@ public class ProductsController : BaseController
         GetListProductQuery query = new() { PageRequest = pageRequest };
 
         GetListResponse<GetListProductListItemDto> response = await Mediator.Send(query);
+
+        return Ok(response);
+    }
+    [HttpGet("OData")]
+    [EnableQuery]
+    public async Task<ActionResult<IQueryable<GetListProductListItemDto>>> GetListOData()
+    {
+        ODataProductQuery query = new();
+
+        IQueryable<GetListProductListItemDto> response = await Mediator.Send(query);
 
         return Ok(response);
     }
