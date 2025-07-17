@@ -6,6 +6,8 @@ using Application.Features.Clothings.Queries.GetList;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
+using Application.Features.Clothings.ODataQuery;
 
 namespace WebAPI.Controllers;
 
@@ -55,6 +57,16 @@ public class ClothingsController : BaseController
         GetListClothingQuery query = new() { PageRequest = pageRequest };
 
         GetListResponse<GetListClothingListItemDto> response = await Mediator.Send(query);
+
+        return Ok(response);
+    }
+    [HttpGet("OData")]
+    [EnableQuery]
+    public async Task<ActionResult<IQueryable<GetListClothingListItemDto>>> GetList()
+    {
+        ODataClothingQuery query = new();
+
+        IQueryable<GetListClothingListItemDto> response = await Mediator.Send(query);
 
         return Ok(response);
     }

@@ -6,6 +6,8 @@ using Application.Features.Foods.Queries.GetList;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
+using Application.Features.Foods.ODataQuery;
 
 namespace WebAPI.Controllers;
 
@@ -55,6 +57,16 @@ public class FoodsController : BaseController
         GetListFoodQuery query = new() { PageRequest = pageRequest };
 
         GetListResponse<GetListFoodListItemDto> response = await Mediator.Send(query);
+
+        return Ok(response);
+    }
+    [HttpGet("OData")]
+    [EnableQuery]
+    public async Task<ActionResult<IQueryable<GetListFoodListItemDto>>> GetList()
+    {
+        ODataFoodQuery query = new();
+
+        IQueryable<GetListFoodListItemDto> response = await Mediator.Send(query);
 
         return Ok(response);
     }

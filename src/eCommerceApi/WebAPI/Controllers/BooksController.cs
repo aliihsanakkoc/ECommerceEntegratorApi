@@ -6,6 +6,8 @@ using Application.Features.Books.Queries.GetList;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
+using Application.Features.Books.ODataQuery;
+using Microsoft.AspNetCore.OData.Query;
 
 namespace WebAPI.Controllers;
 
@@ -55,6 +57,16 @@ public class BooksController : BaseController
         GetListBookQuery query = new() { PageRequest = pageRequest };
 
         GetListResponse<GetListBookListItemDto> response = await Mediator.Send(query);
+
+        return Ok(response);
+    }
+    [HttpGet("OData")]
+    [EnableQuery]
+    public async Task<ActionResult<IQueryable<GetListBookListItemDto>>> GetList()
+    {
+        ODataBookQuery query = new();
+
+        IQueryable<GetListBookListItemDto> response = await Mediator.Send(query);
 
         return Ok(response);
     }
