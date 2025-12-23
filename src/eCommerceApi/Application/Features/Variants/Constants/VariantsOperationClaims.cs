@@ -4,6 +4,8 @@ public static class VariantsOperationClaims
 {
     private const string _section = "Variants";
 
+    public const string Client = $"Client";
+
     public const string Admin = $"{_section}.Admin";
 
     public const string Read = $"{_section}.Read";

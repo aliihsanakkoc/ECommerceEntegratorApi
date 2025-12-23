@@ -10,7 +10,7 @@ public class ValidateBasketCommand : IRequest<ValidateBasketResponse>, ISecuredR
     public decimal CartTotal { get; set; }
     public List<CartItemDto> CartItems { get; set; } = new();
 
-    public string[] Roles => [Admin, Read];
+    public string[] Roles => [Admin, Read, Client];
 
     public class CartItemDto
     {

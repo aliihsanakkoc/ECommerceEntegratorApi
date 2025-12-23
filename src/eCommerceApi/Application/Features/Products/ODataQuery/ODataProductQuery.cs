@@ -10,7 +10,7 @@ using static Application.Features.Products.Constants.ProductsOperationClaims;
 namespace Application.Features.Products.ODataQuery;
 public class ODataProductQuery : IRequest<IQueryable<GetListProductListItemDto>>, ISecuredRequest
 {
-    public string[] Roles => [Admin];
+    public string[] Roles => [Admin, Client];
     public class ODataProductQueryHandler : IRequestHandler<ODataProductQuery, IQueryable<GetListProductListItemDto>>
     {
         private readonly IProductRepository _productRepository;

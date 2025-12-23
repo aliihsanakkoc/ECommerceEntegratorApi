@@ -10,7 +10,7 @@ using static Application.Features.Variants.Constants.VariantsOperationClaims;
 namespace Application.Features.Variants.ODataQuery;
 public class ODataVariantQuery : IRequest<IQueryable<GetListVariantListItemDto>>, ISecuredRequest
 {
-    public string[] Roles => [Admin,Read];
+    public string[] Roles => [Admin,Read, Client];
     public class ODataVariantQueryHandler : IRequestHandler<ODataVariantQuery, IQueryable<GetListVariantListItemDto>>
     {
         private readonly IVariantRepository _variantRepository;

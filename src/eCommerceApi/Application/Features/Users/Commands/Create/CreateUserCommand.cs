@@ -1,51 +1,45 @@
-using Application.Features.Users.Constants;
+using Application.Features.UserOperationClaims.Rules;
 using Application.Features.Users.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
-using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Security.Hashing;
-using static Application.Features.Users.Constants.UsersOperationClaims;
 
 namespace Application.Features.Users.Commands.Create;
 
-public class CreateUserCommand : IRequest<CreatedUserResponse>, ISecuredRequest
+public class CreateUserCommand : IRequest<CreatedUserResponse>
 {
-    public string FirstName { get; set; }
-    public string LastName { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
 
     public CreateUserCommand()
     {
-        FirstName = string.Empty;
-        LastName = string.Empty;
         Email = string.Empty;
         Password = string.Empty;
     }
 
-    public CreateUserCommand(string firstName, string lastName, string email, string password)
+    public CreateUserCommand( string email, string password)
     {
-        FirstName = firstName;
-        LastName = lastName;
         Email = email;
         Password = password;
     }
-
-    public string[] Roles => new[] { Admin, Write, UsersOperationClaims.Create };
 
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommand, CreatedUserResponse>
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly UserBusinessRules _userBusinessRules;
+        private readonly IUserOperationClaimRepository _userOperationClaimRepository;
+        private readonly UserOperationClaimBusinessRules _userOperationClaimBusinessRules;
 
-        public CreateUserCommandHandler(IUserRepository userRepository, IMapper mapper, UserBusinessRules userBusinessRules)
+        public CreateUserCommandHandler(IUserRepository userRepository, IMapper mapper, UserBusinessRules userBusinessRules, IUserOperationClaimRepository userOperationClaimRepository, UserOperationClaimBusinessRules userOperationClaimBusinessRules)
         {
             _userRepository = userRepository;
             _mapper = mapper;
             _userBusinessRules = userBusinessRules;
+            _userOperationClaimRepository = userOperationClaimRepository;
+            _userOperationClaimBusinessRules = userOperationClaimBusinessRules;
         }
 
         public async Task<CreatedUserResponse> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -62,6 +56,21 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>, ISecuredRequest
             user.PasswordSalt = passwordSalt;
             User createdUser = await _userRepository.AddAsync(user);
 
+            // Assign OperationClaimId 84 to the new user by manually invoking the CreateUserOperationClaimCommand logic
+            var createUserOperationClaimCommand = new Application.Features.UserOperationClaims.Commands.Create.CreateUserOperationClaimCommand
+            {
+                UserId = createdUser.Id,
+                OperationClaimId = 84
+            };
+
+            var createUserOperationClaimCommandHandler = new Application.Features.UserOperationClaims.Commands.Create.CreateUserOperationClaimCommand.CreateUserOperationClaimCommandHandler(
+                _userOperationClaimRepository,
+                _mapper,
+                _userOperationClaimBusinessRules
+            );
+
+            await createUserOperationClaimCommandHandler.Handle(createUserOperationClaimCommand, cancellationToken);
+            
             CreatedUserResponse response = _mapper.Map<CreatedUserResponse>(createdUser);
             return response;
         }

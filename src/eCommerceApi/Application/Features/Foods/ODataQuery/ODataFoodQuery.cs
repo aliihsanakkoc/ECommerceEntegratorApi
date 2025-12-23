@@ -9,7 +9,7 @@ using static Application.Features.Foods.Constants.FoodsOperationClaims;
 namespace Application.Features.Foods.ODataQuery;
 public class ODataFoodQuery : IRequest<IQueryable<GetListFoodListItemDto>>, ISecuredRequest
 {
-    public string[] Roles => [Admin];
+    public string[] Roles => [Admin, Client];
     public class ODataFoodQueryHandler : IRequestHandler<ODataFoodQuery, IQueryable<GetListFoodListItemDto>>
     {
         private readonly IMapper _mapper;

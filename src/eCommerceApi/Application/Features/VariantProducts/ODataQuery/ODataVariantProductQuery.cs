@@ -9,7 +9,7 @@ using static Application.Features.VariantProducts.Constants.VariantProductsOpera
 namespace Application.Features.VariantProducts.ODataQuery;
 public class ODataVariantProductQuery : IRequest<IQueryable<GetListVariantProductListItemDto>>, ISecuredRequest
 {
-    public string[] Roles => [Admin,Read];
+    public string[] Roles => [Admin,Read, Client];
     public class ODataVariantProductQueryHandler : IRequestHandler<ODataVariantProductQuery, IQueryable<GetListVariantProductListItemDto>>
     {
         private readonly IVariantProductRepository _variantProductRepository;

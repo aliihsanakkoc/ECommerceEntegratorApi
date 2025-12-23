@@ -9,7 +9,7 @@ using static Application.Features.Clothings.Constants.ClothingsOperationClaims;
 namespace Application.Features.Clothings.ODataQuery;
 public class ODataClothingQuery : IRequest<IQueryable<GetListClothingListItemDto>>, ISecuredRequest
 {
-    public string[] Roles => [Admin];
+    public string[] Roles => [Admin, Client];
     public class ODataClothingQueryHandler : IRequestHandler<ODataClothingQuery, IQueryable<GetListClothingListItemDto>>
     {
         private readonly IMapper _mapper;

@@ -10,7 +10,7 @@ using static Application.Features.Books.Constants.BooksOperationClaims;
 namespace Application.Features.Books.ODataQuery;
 public class ODataBookQuery : IRequest<IQueryable<GetListBookListItemDto>>, ISecuredRequest
 {
-    public string[] Roles => [Admin];
+    public string[] Roles => [Admin, Client];
 }
 public class ODataBookQueryHandler : IRequestHandler<ODataBookQuery, IQueryable<GetListBookListItemDto>>
 {

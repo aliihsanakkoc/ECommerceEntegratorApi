@@ -4,6 +4,8 @@ public static class ProductsOperationClaims
 {
     private const string _section = "Products";
 
+    public const string Client = $"Client";
+
     public const string Admin = $"{_section}.Admin";
 
     public const string Read = $"{_section}.Read";

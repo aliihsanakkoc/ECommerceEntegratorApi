@@ -9,7 +9,7 @@ using static Application.Features.CategoryProducts.Constants.CategoryProductsOpe
 namespace Application.Features.CategoryProducts.ODataQuery;
 public class ODataCategoryProductQuery : IRequest<IQueryable<GetListCategoryProductListItemDto>>, ISecuredRequest
 {
-    public string[] Roles => [Admin,Read];
+    public string[] Roles => [Admin,Read, Client];
     public class ODataCategoryProductQueryHandler : IRequestHandler<ODataCategoryProductQuery, IQueryable<GetListCategoryProductListItemDto>>
     {
         private readonly ICategoryProductRepository _categoryProductRepository;

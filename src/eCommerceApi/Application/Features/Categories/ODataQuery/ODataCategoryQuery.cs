@@ -11,7 +11,7 @@ using static Application.Features.Categories.Constants.CategoriesOperationClaims
 namespace Application.Features.Categories.ODataQuery;
 public class ODataCategoryQuery : IRequest<IQueryable<GetListCategoryListItemDto>>, ISecuredRequest
 {
-    public string[] Roles => [Admin];
+    public string[] Roles => [Admin, Read, Client];
     public class ODataCategoryQueryHandler : IRequestHandler<ODataCategoryQuery, IQueryable<GetListCategoryListItemDto>>
     {
         private readonly ICategoryRepository _categoryRepository;
