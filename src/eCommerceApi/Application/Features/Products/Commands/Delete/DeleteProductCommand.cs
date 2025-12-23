@@ -4,16 +4,21 @@ using Application.Features.Products.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
-using MediatR;
 using static Application.Features.Products.Constants.ProductsOperationClaims;
 
 namespace Application.Features.Products.Commands.Delete;
 
-public class DeleteProductCommand : IRequest<DeletedProductResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class DeleteProductCommand
+    : IRequest<DeletedProductResponse>,
+        ISecuredRequest,
+        ICacheRemoverRequest,
+        ILoggableRequest,
+        ITransactionalRequest
 {
     public int Id { get; set; }
 
@@ -29,8 +34,11 @@ public class DeleteProductCommand : IRequest<DeletedProductResponse>, ISecuredRe
         private readonly IProductRepository _productRepository;
         private readonly ProductBusinessRules _productBusinessRules;
 
-        public DeleteProductCommandHandler(IMapper mapper, IProductRepository productRepository,
-                                         ProductBusinessRules productBusinessRules)
+        public DeleteProductCommandHandler(
+            IMapper mapper,
+            IProductRepository productRepository,
+            ProductBusinessRules productBusinessRules
+        )
         {
             _mapper = mapper;
             _productRepository = productRepository;
@@ -39,7 +47,10 @@ public class DeleteProductCommand : IRequest<DeletedProductResponse>, ISecuredRe
 
         public async Task<DeletedProductResponse> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
-            Product? product = await _productRepository.GetAsync(predicate: p => p.Id == request.Id, cancellationToken: cancellationToken);
+            Product? product = await _productRepository.GetAsync(
+                predicate: p => p.Id == request.Id,
+                cancellationToken: cancellationToken
+            );
             await _productBusinessRules.ProductShouldExistWhenSelected(product);
 
             await _productRepository.DeleteAsync(product!);

@@ -1,9 +1,9 @@
 using Application.Features.Variants.Constants;
 using Application.Services.Repositories;
+using Domain.Entities;
 using NArchitecture.Core.Application.Rules;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 using NArchitecture.Core.Localization.Abstraction;
-using Domain.Entities;
 
 namespace Application.Features.Variants.Rules;
 
@@ -39,6 +39,7 @@ public class VariantBusinessRules : BaseBusinessRules
         );
         await VariantShouldExistWhenSelected(variant);
     }
+
     public async Task VariantNameIsAlreadyExist(Variant? variant)
     {
         if (variant != null)
@@ -54,6 +55,7 @@ public class VariantBusinessRules : BaseBusinessRules
         );
         await VariantNameIsAlreadyExist(variant);
     }
+
     public async Task VariantIsTopVariant(Variant? variant)
     {
         if (variant != null)

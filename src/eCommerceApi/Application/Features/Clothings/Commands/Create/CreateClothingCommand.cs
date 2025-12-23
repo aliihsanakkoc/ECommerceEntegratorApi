@@ -3,16 +3,21 @@ using Application.Features.Clothings.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
-using MediatR;
 using static Application.Features.Clothings.Constants.ClothingsOperationClaims;
 
 namespace Application.Features.Clothings.Commands.Create;
 
-public class CreateClothingCommand : IRequest<CreatedClothingResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class CreateClothingCommand
+    : IRequest<CreatedClothingResponse>,
+        ISecuredRequest,
+        ICacheRemoverRequest,
+        ILoggableRequest,
+        ITransactionalRequest
 {
     public required string MadeIn { get; set; }
     public required string FiberComposition { get; set; }
@@ -32,8 +37,11 @@ public class CreateClothingCommand : IRequest<CreatedClothingResponse>, ISecured
         private readonly IClothingRepository _clothingRepository;
         private readonly ClothingBusinessRules _clothingBusinessRules;
 
-        public CreateClothingCommandHandler(IMapper mapper, IClothingRepository clothingRepository,
-                                         ClothingBusinessRules clothingBusinessRules)
+        public CreateClothingCommandHandler(
+            IMapper mapper,
+            IClothingRepository clothingRepository,
+            ClothingBusinessRules clothingBusinessRules
+        )
         {
             _mapper = mapper;
             _clothingRepository = clothingRepository;

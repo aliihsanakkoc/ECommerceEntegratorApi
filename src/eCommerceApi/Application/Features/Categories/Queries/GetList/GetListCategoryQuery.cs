@@ -2,12 +2,12 @@ using Application.Features.Categories.Constants;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
-using MediatR;
 using static Application.Features.Categories.Constants.CategoriesOperationClaims;
 
 namespace Application.Features.Categories.Queries.GetList;
@@ -34,15 +34,20 @@ public class GetListCategoryQuery : IRequest<GetListResponse<GetListCategoryList
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListCategoryListItemDto>> Handle(GetListCategoryQuery request, CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListCategoryListItemDto>> Handle(
+            GetListCategoryQuery request,
+            CancellationToken cancellationToken
+        )
         {
             IPaginate<Category> categories = await _categoryRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize, 
+                size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken
             );
 
-            GetListResponse<GetListCategoryListItemDto> response = _mapper.Map<GetListResponse<GetListCategoryListItemDto>>(categories);
+            GetListResponse<GetListCategoryListItemDto> response = _mapper.Map<GetListResponse<GetListCategoryListItemDto>>(
+                categories
+            );
             return response;
         }
     }

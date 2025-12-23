@@ -10,7 +10,13 @@ using NArchitecture.Core.Application.Pipelines.Transaction;
 using static Application.Features.VariantProducts.Constants.VariantProductsOperationClaims;
 
 namespace Application.Features.VariantProducts.RangeCommands;
-public class DeleteRangeVariantProductsCommand : IRequest<Unit>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+
+public class DeleteRangeVariantProductsCommand
+    : IRequest<Unit>,
+        ISecuredRequest,
+        ICacheRemoverRequest,
+        ILoggableRequest,
+        ITransactionalRequest
 {
     public int[] Ids { get; set; }
 
@@ -25,8 +31,10 @@ public class DeleteRangeVariantProductsCommand : IRequest<Unit>, ISecuredRequest
         private readonly IVariantProductRepository _variantProductRepository;
         private readonly VariantProductBusinessRules _variantProductBusinessRules;
 
-        public DeleteRangeVariantProductsCommandHandler(IVariantProductRepository variantProductRepository,
-                                         VariantProductBusinessRules variantProductBusinessRules)
+        public DeleteRangeVariantProductsCommandHandler(
+            IVariantProductRepository variantProductRepository,
+            VariantProductBusinessRules variantProductBusinessRules
+        )
         {
             _variantProductRepository = variantProductRepository;
             _variantProductBusinessRules = variantProductBusinessRules;
@@ -34,12 +42,15 @@ public class DeleteRangeVariantProductsCommand : IRequest<Unit>, ISecuredRequest
 
         public async Task<Unit> Handle(DeleteRangeVariantProductsCommand request, CancellationToken cancellationToken)
         {
-            foreach(int id in request.Ids)
+            foreach (int id in request.Ids)
             {
-                VariantProduct? variantProduct = await _variantProductRepository.GetAsync(predicate: vp => vp.Id == id, cancellationToken: cancellationToken);
+                VariantProduct? variantProduct = await _variantProductRepository.GetAsync(
+                    predicate: vp => vp.Id == id,
+                    cancellationToken: cancellationToken
+                );
                 await _variantProductBusinessRules.VariantProductShouldExistWhenSelected(variantProduct);
 
-                await _variantProductRepository.DeleteAsync(variantProduct!, permanent:true);
+                await _variantProductRepository.DeleteAsync(variantProduct!, permanent: true);
             }
             return Unit.Value;
         }

@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using static Application.Features.Baskets.Constants.BasketsOperationClaims;
+
 namespace Application.Features.Baskets.Commands.ValidateBasket;
 
 public class ValidateBasketCommand : IRequest<ValidateBasketResponse>, ISecuredRequest
@@ -65,10 +66,10 @@ public class ValidateBasketCommand : IRequest<ValidateBasketResponse>, ISecuredR
                         hasMismatch = true;
                     }
 
-                    // If Product has variants, we typically expect a selection. 
+                    // If Product has variants, we typically expect a selection.
                     // But if strict requirements weren't detailed, we assume checking 'validity of sent ids' is key.
                     // However, 'varyant uyumsuzluğu' implies state mismatch.
-                    // If user sends empty list but variants exist, is it a mismatch? 
+                    // If user sends empty list but variants exist, is it a mismatch?
                     // Let's assume Yes for consistency, but if unsure, maybe skip?
                     // User said: "Bazı productlarda variant olmayabilir, bunlarda varyant check yapma." -> Only checking the negative case.
                     // I will stick to: If you sent variants, they MUST be valid.
@@ -95,12 +96,14 @@ public class ValidateBasketCommand : IRequest<ValidateBasketResponse>, ISecuredR
                     var product = products.Items.FirstOrDefault(p => p.Id == item.ProductId);
                     if (product != null)
                     {
-                        response.Mismatches.Add(new ValidateBasketResponse.ProductMismatchDto
-                        {
-                            ProductId = product.Id,
-                            ProductPrice = product.ProductPrice, // Return DB Price
-                            VariantIds = product.VariantProducts?.Select(vp => vp.VariantId).ToList() ?? new List<int>() // Return Valid DB Variants
-                        });
+                        response.Mismatches.Add(
+                            new ValidateBasketResponse.ProductMismatchDto
+                            {
+                                ProductId = product.Id,
+                                ProductPrice = product.ProductPrice, // Return DB Price
+                                VariantIds = product.VariantProducts?.Select(vp => vp.VariantId).ToList() ?? new List<int>() // Return Valid DB Variants
+                            }
+                        );
                     }
                 }
             }

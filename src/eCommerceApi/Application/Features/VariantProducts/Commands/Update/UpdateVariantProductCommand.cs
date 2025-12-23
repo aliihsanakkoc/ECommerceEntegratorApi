@@ -3,16 +3,21 @@ using Application.Features.VariantProducts.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
-using MediatR;
 using static Application.Features.VariantProducts.Constants.VariantProductsOperationClaims;
 
 namespace Application.Features.VariantProducts.Commands.Update;
 
-public class UpdateVariantProductCommand : IRequest<UpdatedVariantProductResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class UpdateVariantProductCommand
+    : IRequest<UpdatedVariantProductResponse>,
+        ISecuredRequest,
+        ICacheRemoverRequest,
+        ILoggableRequest,
+        ITransactionalRequest
 {
     public int Id { get; set; }
     public required int VariantId { get; set; }
@@ -30,17 +35,26 @@ public class UpdateVariantProductCommand : IRequest<UpdatedVariantProductRespons
         private readonly IVariantProductRepository _variantProductRepository;
         private readonly VariantProductBusinessRules _variantProductBusinessRules;
 
-        public UpdateVariantProductCommandHandler(IMapper mapper, IVariantProductRepository variantProductRepository,
-                                         VariantProductBusinessRules variantProductBusinessRules)
+        public UpdateVariantProductCommandHandler(
+            IMapper mapper,
+            IVariantProductRepository variantProductRepository,
+            VariantProductBusinessRules variantProductBusinessRules
+        )
         {
             _mapper = mapper;
             _variantProductRepository = variantProductRepository;
             _variantProductBusinessRules = variantProductBusinessRules;
         }
 
-        public async Task<UpdatedVariantProductResponse> Handle(UpdateVariantProductCommand request, CancellationToken cancellationToken)
+        public async Task<UpdatedVariantProductResponse> Handle(
+            UpdateVariantProductCommand request,
+            CancellationToken cancellationToken
+        )
         {
-            VariantProduct? variantProduct = await _variantProductRepository.GetAsync(predicate: vp => vp.Id == request.Id, cancellationToken: cancellationToken);
+            VariantProduct? variantProduct = await _variantProductRepository.GetAsync(
+                predicate: vp => vp.Id == request.Id,
+                cancellationToken: cancellationToken
+            );
             await _variantProductBusinessRules.VariantProductShouldExistWhenSelected(variantProduct);
             variantProduct = _mapper.Map(request, variantProduct);
 

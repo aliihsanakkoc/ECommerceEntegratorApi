@@ -1,9 +1,9 @@
+using System.Linq.Expressions;
 using Application.Features.VariantProducts.Rules;
 using Application.Services.Repositories;
-using NArchitecture.Core.Persistence.Paging;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
-using System.Linq.Expressions;
+using NArchitecture.Core.Persistence.Paging;
 
 namespace Application.Services.VariantProducts;
 
@@ -12,7 +12,10 @@ public class VariantProductManager : IVariantProductService
     private readonly IVariantProductRepository _variantProductRepository;
     private readonly VariantProductBusinessRules _variantProductBusinessRules;
 
-    public VariantProductManager(IVariantProductRepository variantProductRepository, VariantProductBusinessRules variantProductBusinessRules)
+    public VariantProductManager(
+        IVariantProductRepository variantProductRepository,
+        VariantProductBusinessRules variantProductBusinessRules
+    )
     {
         _variantProductRepository = variantProductRepository;
         _variantProductBusinessRules = variantProductBusinessRules;
@@ -26,7 +29,13 @@ public class VariantProductManager : IVariantProductService
         CancellationToken cancellationToken = default
     )
     {
-        VariantProduct? variantProduct = await _variantProductRepository.GetAsync(predicate, include, withDeleted, enableTracking, cancellationToken);
+        VariantProduct? variantProduct = await _variantProductRepository.GetAsync(
+            predicate,
+            include,
+            withDeleted,
+            enableTracking,
+            cancellationToken
+        );
         return variantProduct;
     }
 

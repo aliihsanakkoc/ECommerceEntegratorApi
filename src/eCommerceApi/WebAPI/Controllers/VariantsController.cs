@@ -1,13 +1,13 @@
 using Application.Features.Variants.Commands.Create;
 using Application.Features.Variants.Commands.Delete;
 using Application.Features.Variants.Commands.Update;
+using Application.Features.Variants.ODataQuery;
 using Application.Features.Variants.Queries.GetById;
 using Application.Features.Variants.Queries.GetList;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
-using Microsoft.AspNetCore.Mvc;
-using Application.Features.Variants.ODataQuery;
-using Microsoft.AspNetCore.OData.Query;
 
 namespace WebAPI.Controllers;
 
@@ -60,11 +60,12 @@ public class VariantsController : BaseController
 
         return Ok(response);
     }
+
     [HttpGet("OData")]
     [EnableQuery]
     public async Task<ActionResult<IQueryable<GetListVariantListItemDto>>> GetList()
     {
-        ODataVariantQuery query = new() ;
+        ODataVariantQuery query = new();
 
         IQueryable<GetListVariantListItemDto> response = await Mediator.Send(query);
 

@@ -21,6 +21,6 @@ public class CategoryProductConfiguration : IEntityTypeConfiguration<CategoryPro
 
         builder.HasOne(cp => cp.Category);
         builder.HasOne(cp => cp.Product);
-        builder.HasIndex(cp => new {cp.ProductId, cp.CategoryId}).IsUnique();
+        builder.HasIndex(cp => new { cp.ProductId, cp.CategoryId }).IsUnique();
     }
 }

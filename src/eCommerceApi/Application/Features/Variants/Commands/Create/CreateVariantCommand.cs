@@ -3,16 +3,21 @@ using Application.Features.Variants.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
-using MediatR;
 using static Application.Features.Variants.Constants.VariantsOperationClaims;
 
 namespace Application.Features.Variants.Commands.Create;
 
-public class CreateVariantCommand : IRequest<CreatedVariantResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class CreateVariantCommand
+    : IRequest<CreatedVariantResponse>,
+        ISecuredRequest,
+        ICacheRemoverRequest,
+        ILoggableRequest,
+        ITransactionalRequest
 {
     public required string VariantName { get; set; }
     public required string TopVariantName { get; set; }
@@ -30,8 +35,11 @@ public class CreateVariantCommand : IRequest<CreatedVariantResponse>, ISecuredRe
         private readonly IVariantRepository _variantRepository;
         private readonly VariantBusinessRules _variantBusinessRules;
 
-        public CreateVariantCommandHandler(IMapper mapper, IVariantRepository variantRepository,
-                                         VariantBusinessRules variantBusinessRules)
+        public CreateVariantCommandHandler(
+            IMapper mapper,
+            IVariantRepository variantRepository,
+            VariantBusinessRules variantBusinessRules
+        )
         {
             _mapper = mapper;
             _variantRepository = variantRepository;

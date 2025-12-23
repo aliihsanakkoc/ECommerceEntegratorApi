@@ -7,7 +7,6 @@ namespace Persistence.Repositories;
 
 public class FoodRepository : EfRepositoryBase<Food, int, BaseDbContext>, IFoodRepository
 {
-    public FoodRepository(BaseDbContext context) : base(context)
-    {
-    }
+    public FoodRepository(BaseDbContext context)
+        : base(context) { }
 }

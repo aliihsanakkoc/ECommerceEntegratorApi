@@ -2,12 +2,12 @@ using Application.Features.Books.Constants;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
-using MediatR;
 using static Application.Features.Books.Constants.BooksOperationClaims;
 
 namespace Application.Features.Books.Queries.GetList;
@@ -34,11 +34,14 @@ public class GetListBookQuery : IRequest<GetListResponse<GetListBookListItemDto>
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListBookListItemDto>> Handle(GetListBookQuery request, CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListBookListItemDto>> Handle(
+            GetListBookQuery request,
+            CancellationToken cancellationToken
+        )
         {
             IPaginate<Book> books = await _bookRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize, 
+                size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken
             );
 

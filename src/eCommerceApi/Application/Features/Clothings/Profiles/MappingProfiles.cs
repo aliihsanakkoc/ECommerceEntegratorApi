@@ -4,8 +4,8 @@ using Application.Features.Clothings.Commands.Update;
 using Application.Features.Clothings.Queries.GetById;
 using Application.Features.Clothings.Queries.GetList;
 using AutoMapper;
-using NArchitecture.Core.Application.Responses;
 using Domain.Entities;
+using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
 
 namespace Application.Features.Clothings.Profiles;

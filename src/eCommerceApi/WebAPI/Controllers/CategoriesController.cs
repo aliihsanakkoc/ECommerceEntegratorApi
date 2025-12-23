@@ -1,13 +1,13 @@
 using Application.Features.Categories.Commands.Create;
 using Application.Features.Categories.Commands.Delete;
 using Application.Features.Categories.Commands.Update;
+using Application.Features.Categories.ODataQuery;
 using Application.Features.Categories.Queries.GetById;
 using Application.Features.Categories.Queries.GetList;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
-using Microsoft.AspNetCore.Mvc;
-using Application.Features.Categories.ODataQuery;
-using Microsoft.AspNetCore.OData.Query;
 
 namespace WebAPI.Controllers;
 
@@ -60,11 +60,12 @@ public class CategoriesController : BaseController
 
         return Ok(response);
     }
+
     [HttpGet("OData")]
     [EnableQuery]
     public async Task<ActionResult<IQueryable<GetListCategoryListItemDto>>> GetList()
     {
-        ODataCategoryQuery query = new() ;
+        ODataCategoryQuery query = new();
 
         IQueryable<GetListCategoryListItemDto> response = await Mediator.Send(query);
 

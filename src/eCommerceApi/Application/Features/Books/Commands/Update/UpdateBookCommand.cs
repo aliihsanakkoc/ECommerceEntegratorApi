@@ -3,16 +3,21 @@ using Application.Features.Books.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
-using MediatR;
 using static Application.Features.Books.Constants.BooksOperationClaims;
 
 namespace Application.Features.Books.Commands.Update;
 
-public class UpdateBookCommand : IRequest<UpdatedBookResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class UpdateBookCommand
+    : IRequest<UpdatedBookResponse>,
+        ISecuredRequest,
+        ICacheRemoverRequest,
+        ILoggableRequest,
+        ITransactionalRequest
 {
     public int Id { get; set; }
     public required string Title { get; set; }
@@ -35,8 +40,7 @@ public class UpdateBookCommand : IRequest<UpdatedBookResponse>, ISecuredRequest,
         private readonly IBookRepository _bookRepository;
         private readonly BookBusinessRules _bookBusinessRules;
 
-        public UpdateBookCommandHandler(IMapper mapper, IBookRepository bookRepository,
-                                         BookBusinessRules bookBusinessRules)
+        public UpdateBookCommandHandler(IMapper mapper, IBookRepository bookRepository, BookBusinessRules bookBusinessRules)
         {
             _mapper = mapper;
             _bookRepository = bookRepository;

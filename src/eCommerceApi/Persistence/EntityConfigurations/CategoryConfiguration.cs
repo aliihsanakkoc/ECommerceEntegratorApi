@@ -22,11 +22,20 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
 
         builder.HasQueryFilter(c => !c.DeletedDate.HasValue);
 
-        builder.HasOne(c=>c.TopCategory).WithMany(c=>c.SubCategories).
-            HasForeignKey(c=>c.TopCategoryId).OnDelete(DeleteBehavior.Restrict);  
-        
-        builder.HasData( new Category("Top Category", "Seed Top Category") 
-            { Id = 1, TopCategoryId = 1, IsProductCategorization = false });
+        builder
+            .HasOne(c => c.TopCategory)
+            .WithMany(c => c.SubCategories)
+            .HasForeignKey(c => c.TopCategoryId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder.HasData(
+            new Category("Top Category", "Seed Top Category")
+            {
+                Id = 1,
+                TopCategoryId = 1,
+                IsProductCategorization = false
+            }
+        );
 
         builder.HasIndex(c => c.FullCategoryName).IsUnique();
     }

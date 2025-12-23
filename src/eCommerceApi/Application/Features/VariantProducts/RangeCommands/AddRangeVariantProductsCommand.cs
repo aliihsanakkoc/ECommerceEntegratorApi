@@ -7,8 +7,15 @@ using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
 using static Application.Features.VariantProducts.Constants.VariantProductsOperationClaims;
+
 namespace Application.Features.VariantProducts.RangeCommands;
-public class AddRangeVariantProductsCommand : IRequest<Unit>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+
+public class AddRangeVariantProductsCommand
+    : IRequest<Unit>,
+        ISecuredRequest,
+        ICacheRemoverRequest,
+        ILoggableRequest,
+        ITransactionalRequest
 {
     public required int[] VariantIds { get; set; }
     public required int ProductId { get; set; }
@@ -30,14 +37,10 @@ public class AddRangeVariantProductsCommand : IRequest<Unit>, ISecuredRequest, I
 
         public async Task<Unit> Handle(AddRangeVariantProductsCommand request, CancellationToken cancellationToken)
         {
-            List<VariantProduct> variantProducts = new();   
-            foreach(int id in request.VariantIds)
+            List<VariantProduct> variantProducts = new();
+            foreach (int id in request.VariantIds)
             {
-                VariantProduct variantProduct = new()
-                {
-                    ProductId = request.ProductId,
-                    VariantId = id
-                };
+                VariantProduct variantProduct = new() { ProductId = request.ProductId, VariantId = id };
                 variantProducts.Add(variantProduct);
             }
             await _variantProductRepository.AddRangeAsync(variantProducts);

@@ -3,8 +3,8 @@ using Application.Features.Clothings.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
-using NArchitecture.Core.Application.Pipelines.Authorization;
 using MediatR;
+using NArchitecture.Core.Application.Pipelines.Authorization;
 using static Application.Features.Clothings.Constants.ClothingsOperationClaims;
 
 namespace Application.Features.Clothings.Queries.GetById;
@@ -21,7 +21,11 @@ public class GetByIdClothingQuery : IRequest<GetByIdClothingResponse>, ISecuredR
         private readonly IClothingRepository _clothingRepository;
         private readonly ClothingBusinessRules _clothingBusinessRules;
 
-        public GetByIdClothingQueryHandler(IMapper mapper, IClothingRepository clothingRepository, ClothingBusinessRules clothingBusinessRules)
+        public GetByIdClothingQueryHandler(
+            IMapper mapper,
+            IClothingRepository clothingRepository,
+            ClothingBusinessRules clothingBusinessRules
+        )
         {
             _mapper = mapper;
             _clothingRepository = clothingRepository;
@@ -30,7 +34,10 @@ public class GetByIdClothingQuery : IRequest<GetByIdClothingResponse>, ISecuredR
 
         public async Task<GetByIdClothingResponse> Handle(GetByIdClothingQuery request, CancellationToken cancellationToken)
         {
-            Clothing? clothing = await _clothingRepository.GetAsync(predicate: c => c.ProductId == request.Id, cancellationToken: cancellationToken);
+            Clothing? clothing = await _clothingRepository.GetAsync(
+                predicate: c => c.ProductId == request.Id,
+                cancellationToken: cancellationToken
+            );
             await _clothingBusinessRules.ClothingShouldExistWhenSelected(clothing);
 
             GetByIdClothingResponse response = _mapper.Map<GetByIdClothingResponse>(clothing);

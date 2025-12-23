@@ -19,7 +19,7 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>
         Password = string.Empty;
     }
 
-    public CreateUserCommand( string email, string password)
+    public CreateUserCommand(string email, string password)
     {
         Email = email;
         Password = password;
@@ -33,7 +33,13 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>
         private readonly IUserOperationClaimRepository _userOperationClaimRepository;
         private readonly UserOperationClaimBusinessRules _userOperationClaimBusinessRules;
 
-        public CreateUserCommandHandler(IUserRepository userRepository, IMapper mapper, UserBusinessRules userBusinessRules, IUserOperationClaimRepository userOperationClaimRepository, UserOperationClaimBusinessRules userOperationClaimBusinessRules)
+        public CreateUserCommandHandler(
+            IUserRepository userRepository,
+            IMapper mapper,
+            UserBusinessRules userBusinessRules,
+            IUserOperationClaimRepository userOperationClaimRepository,
+            UserOperationClaimBusinessRules userOperationClaimBusinessRules
+        )
         {
             _userRepository = userRepository;
             _mapper = mapper;
@@ -57,20 +63,22 @@ public class CreateUserCommand : IRequest<CreatedUserResponse>
             User createdUser = await _userRepository.AddAsync(user);
 
             // Assign OperationClaimId 84 to the new user by manually invoking the CreateUserOperationClaimCommand logic
-            var createUserOperationClaimCommand = new Application.Features.UserOperationClaims.Commands.Create.CreateUserOperationClaimCommand
-            {
-                UserId = createdUser.Id,
-                OperationClaimId = 84
-            };
+            var createUserOperationClaimCommand =
+                new Application.Features.UserOperationClaims.Commands.Create.CreateUserOperationClaimCommand
+                {
+                    UserId = createdUser.Id,
+                    OperationClaimId = 84
+                };
 
-            var createUserOperationClaimCommandHandler = new Application.Features.UserOperationClaims.Commands.Create.CreateUserOperationClaimCommand.CreateUserOperationClaimCommandHandler(
-                _userOperationClaimRepository,
-                _mapper,
-                _userOperationClaimBusinessRules
-            );
+            var createUserOperationClaimCommandHandler =
+                new Application.Features.UserOperationClaims.Commands.Create.CreateUserOperationClaimCommand.CreateUserOperationClaimCommandHandler(
+                    _userOperationClaimRepository,
+                    _mapper,
+                    _userOperationClaimBusinessRules
+                );
 
             await createUserOperationClaimCommandHandler.Handle(createUserOperationClaimCommand, cancellationToken);
-            
+
             CreatedUserResponse response = _mapper.Map<CreatedUserResponse>(createdUser);
             return response;
         }

@@ -1,13 +1,13 @@
 using Application.Features.Foods.Commands.Create;
 using Application.Features.Foods.Commands.Delete;
 using Application.Features.Foods.Commands.Update;
+using Application.Features.Foods.ODataQuery;
 using Application.Features.Foods.Queries.GetById;
 using Application.Features.Foods.Queries.GetList;
-using NArchitecture.Core.Application.Requests;
-using NArchitecture.Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
-using Application.Features.Foods.ODataQuery;
+using NArchitecture.Core.Application.Requests;
+using NArchitecture.Core.Application.Responses;
 
 namespace WebAPI.Controllers;
 
@@ -60,6 +60,7 @@ public class FoodsController : BaseController
 
         return Ok(response);
     }
+
     [HttpGet("OData")]
     [EnableQuery]
     public async Task<ActionResult<IQueryable<GetListFoodListItemDto>>> GetList()

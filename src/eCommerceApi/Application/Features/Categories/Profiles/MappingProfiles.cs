@@ -4,8 +4,8 @@ using Application.Features.Categories.Commands.Update;
 using Application.Features.Categories.Queries.GetById;
 using Application.Features.Categories.Queries.GetList;
 using AutoMapper;
-using NArchitecture.Core.Application.Responses;
 using Domain.Entities;
+using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
 
 namespace Application.Features.Categories.Profiles;

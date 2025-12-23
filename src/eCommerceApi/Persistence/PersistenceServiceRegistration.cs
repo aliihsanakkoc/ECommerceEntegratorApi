@@ -14,8 +14,9 @@ public static class PersistenceServiceRegistration
     {
         //services.AddDbContext<BaseDbContext>(options => options.UseInMemoryDatabase("BaseDb"));
 
-        services.AddDbContext<BaseDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("sqlconnection"),
-            m => m.MigrationsAssembly("Persistence")));
+        services.AddDbContext<BaseDbContext>(options =>
+            options.UseSqlServer(configuration.GetConnectionString("sqlconnection"), m => m.MigrationsAssembly("Persistence"))
+        );
 
         services.AddDbMigrationApplier(buildServices => buildServices.GetRequiredService<BaseDbContext>());
 

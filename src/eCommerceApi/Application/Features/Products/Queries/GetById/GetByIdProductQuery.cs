@@ -3,8 +3,8 @@ using Application.Features.Products.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
-using NArchitecture.Core.Application.Pipelines.Authorization;
 using MediatR;
+using NArchitecture.Core.Application.Pipelines.Authorization;
 using static Application.Features.Products.Constants.ProductsOperationClaims;
 
 namespace Application.Features.Products.Queries.GetById;
@@ -21,7 +21,11 @@ public class GetByIdProductQuery : IRequest<GetByIdProductResponse>, ISecuredReq
         private readonly IProductRepository _productRepository;
         private readonly ProductBusinessRules _productBusinessRules;
 
-        public GetByIdProductQueryHandler(IMapper mapper, IProductRepository productRepository, ProductBusinessRules productBusinessRules)
+        public GetByIdProductQueryHandler(
+            IMapper mapper,
+            IProductRepository productRepository,
+            ProductBusinessRules productBusinessRules
+        )
         {
             _mapper = mapper;
             _productRepository = productRepository;
@@ -30,7 +34,10 @@ public class GetByIdProductQuery : IRequest<GetByIdProductResponse>, ISecuredReq
 
         public async Task<GetByIdProductResponse> Handle(GetByIdProductQuery request, CancellationToken cancellationToken)
         {
-            Product? product = await _productRepository.GetAsync(predicate: p => p.Id == request.Id, cancellationToken: cancellationToken);
+            Product? product = await _productRepository.GetAsync(
+                predicate: p => p.Id == request.Id,
+                cancellationToken: cancellationToken
+            );
             await _productBusinessRules.ProductShouldExistWhenSelected(product);
 
             GetByIdProductResponse response = _mapper.Map<GetByIdProductResponse>(product);

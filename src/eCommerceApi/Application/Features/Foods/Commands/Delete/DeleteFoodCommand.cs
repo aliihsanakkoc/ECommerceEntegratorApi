@@ -4,16 +4,21 @@ using Application.Features.Foods.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
-using MediatR;
 using static Application.Features.Foods.Constants.FoodsOperationClaims;
 
 namespace Application.Features.Foods.Commands.Delete;
 
-public class DeleteFoodCommand : IRequest<DeletedFoodResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class DeleteFoodCommand
+    : IRequest<DeletedFoodResponse>,
+        ISecuredRequest,
+        ICacheRemoverRequest,
+        ILoggableRequest,
+        ITransactionalRequest
 {
     public int Id { get; set; }
 
@@ -29,8 +34,7 @@ public class DeleteFoodCommand : IRequest<DeletedFoodResponse>, ISecuredRequest,
         private readonly IFoodRepository _foodRepository;
         private readonly FoodBusinessRules _foodBusinessRules;
 
-        public DeleteFoodCommandHandler(IMapper mapper, IFoodRepository foodRepository,
-                                         FoodBusinessRules foodBusinessRules)
+        public DeleteFoodCommandHandler(IMapper mapper, IFoodRepository foodRepository, FoodBusinessRules foodBusinessRules)
         {
             _mapper = mapper;
             _foodRepository = foodRepository;

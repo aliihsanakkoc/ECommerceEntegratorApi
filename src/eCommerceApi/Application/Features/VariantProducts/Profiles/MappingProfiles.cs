@@ -4,8 +4,8 @@ using Application.Features.VariantProducts.Commands.Update;
 using Application.Features.VariantProducts.Queries.GetById;
 using Application.Features.VariantProducts.Queries.GetList;
 using AutoMapper;
-using NArchitecture.Core.Application.Responses;
 using Domain.Entities;
+using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
 
 namespace Application.Features.VariantProducts.Profiles;

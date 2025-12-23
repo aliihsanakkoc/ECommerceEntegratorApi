@@ -1,9 +1,9 @@
+using System.Linq.Expressions;
 using Application.Features.CategoryProducts.Rules;
 using Application.Services.Repositories;
-using NArchitecture.Core.Persistence.Paging;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
-using System.Linq.Expressions;
+using NArchitecture.Core.Persistence.Paging;
 
 namespace Application.Services.CategoryProducts;
 
@@ -12,7 +12,10 @@ public class CategoryProductManager : ICategoryProductService
     private readonly ICategoryProductRepository _categoryProductRepository;
     private readonly CategoryProductBusinessRules _categoryProductBusinessRules;
 
-    public CategoryProductManager(ICategoryProductRepository categoryProductRepository, CategoryProductBusinessRules categoryProductBusinessRules)
+    public CategoryProductManager(
+        ICategoryProductRepository categoryProductRepository,
+        CategoryProductBusinessRules categoryProductBusinessRules
+    )
     {
         _categoryProductRepository = categoryProductRepository;
         _categoryProductBusinessRules = categoryProductBusinessRules;
@@ -26,7 +29,13 @@ public class CategoryProductManager : ICategoryProductService
         CancellationToken cancellationToken = default
     )
     {
-        CategoryProduct? categoryProduct = await _categoryProductRepository.GetAsync(predicate, include, withDeleted, enableTracking, cancellationToken);
+        CategoryProduct? categoryProduct = await _categoryProductRepository.GetAsync(
+            predicate,
+            include,
+            withDeleted,
+            enableTracking,
+            cancellationToken
+        );
         return categoryProduct;
     }
 

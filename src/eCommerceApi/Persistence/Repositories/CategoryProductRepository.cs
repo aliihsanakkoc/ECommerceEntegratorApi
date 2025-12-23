@@ -7,7 +7,6 @@ namespace Persistence.Repositories;
 
 public class CategoryProductRepository : EfRepositoryBase<CategoryProduct, int, BaseDbContext>, ICategoryProductRepository
 {
-    public CategoryProductRepository(BaseDbContext context) : base(context)
-    {
-    }
+    public CategoryProductRepository(BaseDbContext context)
+        : base(context) { }
 }

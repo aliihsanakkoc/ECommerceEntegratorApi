@@ -3,6 +3,4 @@ using NArchitecture.Core.Persistence.Repositories;
 
 namespace Application.Services.Repositories;
 
-public interface IProductRepository : IAsyncRepository<Product, int>, IRepository<Product, int>
-{
-}
+public interface IProductRepository : IAsyncRepository<Product, int>, IRepository<Product, int> { }

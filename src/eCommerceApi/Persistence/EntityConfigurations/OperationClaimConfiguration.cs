@@ -1,31 +1,21 @@
 using Application.Features.Auth.Constants;
+using Application.Features.Books.Constants;
+using Application.Features.Categories.Constants;
+using Application.Features.CategoryProducts.Constants;
+using Application.Features.Clothings.Constants;
+using Application.Features.Foods.Constants;
 using Application.Features.OperationClaims.Constants;
+using Application.Features.Products.Constants;
+using Application.Features.Products.Constants;
+using Application.Features.Products.Constants;
 using Application.Features.UserOperationClaims.Constants;
 using Application.Features.Users.Constants;
+using Application.Features.VariantProducts.Constants;
+using Application.Features.Variants.Constants;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NArchitecture.Core.Security.Constants;
-using Application.Features.Categories.Constants;
-using Application.Features.Products.Constants;
-using Application.Features.CategoryProducts.Constants;
-using Application.Features.Products.Constants;
-using Application.Features.Products.Constants;
-using Application.Features.Variants.Constants;
-using Application.Features.VariantProducts.Constants;
-using Application.Features.Books.Constants;
-using Application.Features.Clothings.Constants;
-using Application.Features.Foods.Constants;
-
-
-
-
-
-
-
-
-
-
 
 namespace Persistence.EntityConfigurations;
 
@@ -117,7 +107,7 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
         );
         #endregion
 
-        
+
         #region Categories CRUD
         featureOperationClaims.AddRange(
             [
@@ -130,8 +120,8 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
             ]
         );
         #endregion
-        
-        
+
+
         #region Products CRUD
         featureOperationClaims.AddRange(
             [
@@ -144,8 +134,8 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
             ]
         );
         #endregion
-        
-        
+
+
         #region CategoryProducts CRUD
         featureOperationClaims.AddRange(
             [
@@ -158,8 +148,8 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
             ]
         );
         #endregion
-        
-        
+
+
         #region Products CRUD
         featureOperationClaims.AddRange(
             [
@@ -172,8 +162,8 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
             ]
         );
         #endregion
-        
-        
+
+
         #region Products CRUD
         featureOperationClaims.AddRange(
             [
@@ -186,8 +176,8 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
             ]
         );
         #endregion
-        
-        
+
+
         #region Variants CRUD
         featureOperationClaims.AddRange(
             [
@@ -200,8 +190,8 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
             ]
         );
         #endregion
-        
-        
+
+
         #region VariantProducts CRUD
         featureOperationClaims.AddRange(
             [
@@ -214,8 +204,8 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
             ]
         );
         #endregion
-        
-        
+
+
         #region Books CRUD
         featureOperationClaims.AddRange(
             [
@@ -228,8 +218,8 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
             ]
         );
         #endregion
-        
-        
+
+
         #region Clothings CRUD
         featureOperationClaims.AddRange(
             [
@@ -242,8 +232,8 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
             ]
         );
         #endregion
-        
-        
+
+
         #region Foods CRUD
         featureOperationClaims.AddRange(
             [
@@ -256,7 +246,7 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
             ]
         );
         #endregion
-        
+
         return featureOperationClaims;
     }
 #pragma warning restore S1854 // Unused assignments should be removed

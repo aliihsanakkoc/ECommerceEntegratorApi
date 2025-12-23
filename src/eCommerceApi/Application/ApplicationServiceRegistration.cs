@@ -1,7 +1,15 @@
 using System.Reflection;
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
+using Application.Services.Books;
+using Application.Services.Categories;
+using Application.Services.CategoryProducts;
+using Application.Services.Clothings;
+using Application.Services.Foods;
+using Application.Services.Products;
 using Application.Services.UsersService;
+using Application.Services.VariantProducts;
+using Application.Services.Variants;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using NArchitecture.Core.Application.Pipelines.Authorization;
@@ -20,14 +28,6 @@ using NArchitecture.Core.Mailing;
 using NArchitecture.Core.Mailing.MailKit;
 using NArchitecture.Core.Security.DependencyInjection;
 using NArchitecture.Core.Security.JWT;
-using Application.Services.Categories;
-using Application.Services.Products;
-using Application.Services.CategoryProducts;
-using Application.Services.Variants;
-using Application.Services.VariantProducts;
-using Application.Services.Books;
-using Application.Services.Clothings;
-using Application.Services.Foods;
 
 namespace Application;
 

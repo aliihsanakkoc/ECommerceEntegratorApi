@@ -1,9 +1,9 @@
+using System.Linq.Expressions;
 using Application.Features.Categories.Rules;
 using Application.Services.Repositories;
-using NArchitecture.Core.Persistence.Paging;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
-using System.Linq.Expressions;
+using NArchitecture.Core.Persistence.Paging;
 
 namespace Application.Services.Categories;
 
@@ -26,7 +26,13 @@ public class CategoryManager : ICategoryService
         CancellationToken cancellationToken = default
     )
     {
-        Category? category = await _categoryRepository.GetAsync(predicate, include, withDeleted, enableTracking, cancellationToken);
+        Category? category = await _categoryRepository.GetAsync(
+            predicate,
+            include,
+            withDeleted,
+            enableTracking,
+            cancellationToken
+        );
         return category;
     }
 

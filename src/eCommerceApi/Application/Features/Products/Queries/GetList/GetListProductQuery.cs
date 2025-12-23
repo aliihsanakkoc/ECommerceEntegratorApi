@@ -2,12 +2,12 @@ using Application.Features.Products.Constants;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
-using MediatR;
 using static Application.Features.Products.Constants.ProductsOperationClaims;
 
 namespace Application.Features.Products.Queries.GetList;
@@ -34,15 +34,20 @@ public class GetListProductQuery : IRequest<GetListResponse<GetListProductListIt
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListProductListItemDto>> Handle(GetListProductQuery request, CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListProductListItemDto>> Handle(
+            GetListProductQuery request,
+            CancellationToken cancellationToken
+        )
         {
             IPaginate<Product> products = await _productRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize, 
+                size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken
             );
 
-            GetListResponse<GetListProductListItemDto> response = _mapper.Map<GetListResponse<GetListProductListItemDto>>(products);
+            GetListResponse<GetListProductListItemDto> response = _mapper.Map<GetListResponse<GetListProductListItemDto>>(
+                products
+            );
             return response;
         }
     }

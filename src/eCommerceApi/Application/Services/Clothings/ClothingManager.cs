@@ -1,9 +1,9 @@
+using System.Linq.Expressions;
 using Application.Features.Clothings.Rules;
 using Application.Services.Repositories;
-using NArchitecture.Core.Persistence.Paging;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
-using System.Linq.Expressions;
+using NArchitecture.Core.Persistence.Paging;
 
 namespace Application.Services.Clothings;
 
@@ -26,7 +26,13 @@ public class ClothingManager : IClothingService
         CancellationToken cancellationToken = default
     )
     {
-        Clothing? clothing = await _clothingRepository.GetAsync(predicate, include, withDeleted, enableTracking, cancellationToken);
+        Clothing? clothing = await _clothingRepository.GetAsync(
+            predicate,
+            include,
+            withDeleted,
+            enableTracking,
+            cancellationToken
+        );
         return clothing;
     }
 

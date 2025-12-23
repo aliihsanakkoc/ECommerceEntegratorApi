@@ -2,17 +2,20 @@ using Application.Features.CategoryProducts.Constants;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
-using MediatR;
 using static Application.Features.CategoryProducts.Constants.CategoryProductsOperationClaims;
 
 namespace Application.Features.CategoryProducts.Queries.GetList;
 
-public class GetListCategoryProductQuery : IRequest<GetListResponse<GetListCategoryProductListItemDto>>, ISecuredRequest, ICachableRequest
+public class GetListCategoryProductQuery
+    : IRequest<GetListResponse<GetListCategoryProductListItemDto>>,
+        ISecuredRequest,
+        ICachableRequest
 {
     public PageRequest PageRequest { get; set; }
 
@@ -23,7 +26,8 @@ public class GetListCategoryProductQuery : IRequest<GetListResponse<GetListCateg
     public string? CacheGroupKey => "GetCategoryProducts";
     public TimeSpan? SlidingExpiration { get; }
 
-    public class GetListCategoryProductQueryHandler : IRequestHandler<GetListCategoryProductQuery, GetListResponse<GetListCategoryProductListItemDto>>
+    public class GetListCategoryProductQueryHandler
+        : IRequestHandler<GetListCategoryProductQuery, GetListResponse<GetListCategoryProductListItemDto>>
     {
         private readonly ICategoryProductRepository _categoryProductRepository;
         private readonly IMapper _mapper;
@@ -34,15 +38,20 @@ public class GetListCategoryProductQuery : IRequest<GetListResponse<GetListCateg
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListCategoryProductListItemDto>> Handle(GetListCategoryProductQuery request, CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListCategoryProductListItemDto>> Handle(
+            GetListCategoryProductQuery request,
+            CancellationToken cancellationToken
+        )
         {
             IPaginate<CategoryProduct> categoryProducts = await _categoryProductRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize, 
+                size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken
             );
 
-            GetListResponse<GetListCategoryProductListItemDto> response = _mapper.Map<GetListResponse<GetListCategoryProductListItemDto>>(categoryProducts);
+            GetListResponse<GetListCategoryProductListItemDto> response = _mapper.Map<
+                GetListResponse<GetListCategoryProductListItemDto>
+            >(categoryProducts);
             return response;
         }
     }

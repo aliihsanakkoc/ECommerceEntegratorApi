@@ -2,12 +2,12 @@ using Application.Features.Clothings.Constants;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
-using MediatR;
 using static Application.Features.Clothings.Constants.ClothingsOperationClaims;
 
 namespace Application.Features.Clothings.Queries.GetList;
@@ -34,15 +34,20 @@ public class GetListClothingQuery : IRequest<GetListResponse<GetListClothingList
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListClothingListItemDto>> Handle(GetListClothingQuery request, CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListClothingListItemDto>> Handle(
+            GetListClothingQuery request,
+            CancellationToken cancellationToken
+        )
         {
             IPaginate<Clothing> clothings = await _clothingRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize, 
+                size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken
             );
 
-            GetListResponse<GetListClothingListItemDto> response = _mapper.Map<GetListResponse<GetListClothingListItemDto>>(clothings);
+            GetListResponse<GetListClothingListItemDto> response = _mapper.Map<GetListResponse<GetListClothingListItemDto>>(
+                clothings
+            );
             return response;
         }
     }

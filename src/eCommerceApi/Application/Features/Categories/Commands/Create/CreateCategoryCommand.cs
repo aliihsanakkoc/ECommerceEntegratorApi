@@ -3,16 +3,21 @@ using Application.Features.Categories.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
-using MediatR;
 using static Application.Features.Categories.Constants.CategoriesOperationClaims;
 
 namespace Application.Features.Categories.Commands.Create;
 
-public class CreateCategoryCommand : IRequest<CreatedCategoryResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class CreateCategoryCommand
+    : IRequest<CreatedCategoryResponse>,
+        ISecuredRequest,
+        ICacheRemoverRequest,
+        ILoggableRequest,
+        ITransactionalRequest
 {
     public required string SingleCategoryName { get; set; }
     public string? FullCategoryName { get; set; }
@@ -32,8 +37,11 @@ public class CreateCategoryCommand : IRequest<CreatedCategoryResponse>, ISecured
         private readonly ICategoryRepository _categoryRepository;
         private readonly CategoryBusinessRules _categoryBusinessRules;
 
-        public CreateCategoryCommandHandler(IMapper mapper, ICategoryRepository categoryRepository,
-                                         CategoryBusinessRules categoryBusinessRules)
+        public CreateCategoryCommandHandler(
+            IMapper mapper,
+            ICategoryRepository categoryRepository,
+            CategoryBusinessRules categoryBusinessRules
+        )
         {
             _mapper = mapper;
             _categoryRepository = categoryRepository;
@@ -44,7 +52,7 @@ public class CreateCategoryCommand : IRequest<CreatedCategoryResponse>, ISecured
         {
             Category category = _mapper.Map<Category>(request);
 
-            await _categoryBusinessRules.FullCategoryNameShouldNotRepeat(category.FullCategoryName, cancellationToken); 
+            await _categoryBusinessRules.FullCategoryNameShouldNotRepeat(category.FullCategoryName, cancellationToken);
 
             await _categoryRepository.AddAsync(category);
 

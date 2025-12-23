@@ -1,9 +1,9 @@
 using Application.Features.VariantProducts.Constants;
 using Application.Services.Repositories;
+using Domain.Entities;
 using NArchitecture.Core.Application.Rules;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 using NArchitecture.Core.Localization.Abstraction;
-using Domain.Entities;
 
 namespace Application.Features.VariantProducts.Rules;
 
@@ -12,7 +12,10 @@ public class VariantProductBusinessRules : BaseBusinessRules
     private readonly IVariantProductRepository _variantProductRepository;
     private readonly ILocalizationService _localizationService;
 
-    public VariantProductBusinessRules(IVariantProductRepository variantProductRepository, ILocalizationService localizationService)
+    public VariantProductBusinessRules(
+        IVariantProductRepository variantProductRepository,
+        ILocalizationService localizationService
+    )
     {
         _variantProductRepository = variantProductRepository;
         _localizationService = localizationService;

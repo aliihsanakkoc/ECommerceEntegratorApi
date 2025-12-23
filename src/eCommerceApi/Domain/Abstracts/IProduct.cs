@@ -1,4 +1,5 @@
 ﻿namespace Domain.Abstracts;
+
 public interface IProduct
 {
     //empty interface

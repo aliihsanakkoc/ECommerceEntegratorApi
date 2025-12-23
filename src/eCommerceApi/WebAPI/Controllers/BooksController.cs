@@ -1,13 +1,13 @@
 using Application.Features.Books.Commands.Create;
 using Application.Features.Books.Commands.Delete;
 using Application.Features.Books.Commands.Update;
+using Application.Features.Books.ODataQuery;
 using Application.Features.Books.Queries.GetById;
 using Application.Features.Books.Queries.GetList;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
-using Microsoft.AspNetCore.Mvc;
-using Application.Features.Books.ODataQuery;
-using Microsoft.AspNetCore.OData.Query;
 
 namespace WebAPI.Controllers;
 
@@ -60,6 +60,7 @@ public class BooksController : BaseController
 
         return Ok(response);
     }
+
     [HttpGet("OData")]
     [EnableQuery]
     public async Task<ActionResult<IQueryable<GetListBookListItemDto>>> GetList()

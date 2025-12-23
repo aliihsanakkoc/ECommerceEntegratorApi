@@ -1,13 +1,13 @@
 using Application.Features.Clothings.Commands.Create;
 using Application.Features.Clothings.Commands.Delete;
 using Application.Features.Clothings.Commands.Update;
+using Application.Features.Clothings.ODataQuery;
 using Application.Features.Clothings.Queries.GetById;
 using Application.Features.Clothings.Queries.GetList;
-using NArchitecture.Core.Application.Requests;
-using NArchitecture.Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
-using Application.Features.Clothings.ODataQuery;
+using NArchitecture.Core.Application.Requests;
+using NArchitecture.Core.Application.Responses;
 
 namespace WebAPI.Controllers;
 
@@ -60,6 +60,7 @@ public class ClothingsController : BaseController
 
         return Ok(response);
     }
+
     [HttpGet("OData")]
     [EnableQuery]
     public async Task<ActionResult<IQueryable<GetListClothingListItemDto>>> GetList()

@@ -1,6 +1,7 @@
 ﻿using NArchitecture.Core.Persistence.Repositories;
 
 namespace Domain.Entities;
+
 public class Category : Entity<int>
 {
     public string SingleCategoryName { get; set; } = default!;
@@ -11,7 +12,9 @@ public class Category : Entity<int>
     public virtual Category TopCategory { get; set; } = default!;
     public virtual ICollection<Category> SubCategories { get; set; } = [];
     public virtual ICollection<CategoryProduct> CategoryProducts { get; set; } = [];
+
     public Category() { }
+
     public Category(string singleCategoryName, string topCategoryName)
     {
         SingleCategoryName = singleCategoryName;
@@ -19,6 +22,7 @@ public class Category : Entity<int>
 
         if (TopCategoryName == "Top Category" || TopCategoryName == "Seed Top Category")
             FullCategoryName = singleCategoryName;
-        else FullCategoryName = topCategoryName + " > " + singleCategoryName;
+        else
+            FullCategoryName = topCategoryName + " > " + singleCategoryName;
     }
 }

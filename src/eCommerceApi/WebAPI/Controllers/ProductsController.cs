@@ -1,14 +1,14 @@
 using Application.Features.Products.Commands.Create;
 using Application.Features.Products.Commands.Delete;
 using Application.Features.Products.Commands.Update;
+using Application.Features.Products.ODataQuery;
+using Application.Features.Products.ProductType;
 using Application.Features.Products.Queries.GetById;
 using Application.Features.Products.Queries.GetList;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
-using Microsoft.AspNetCore.Mvc;
-using Application.Features.Products.ProductType;
-using Application.Features.Products.ODataQuery;
-using Microsoft.AspNetCore.OData.Query;
 
 namespace WebAPI.Controllers;
 
@@ -61,6 +61,7 @@ public class ProductsController : BaseController
 
         return Ok(response);
     }
+
     [HttpGet("OData")]
     [EnableQuery]
     public async Task<ActionResult<IQueryable<GetListProductListItemDto>>> GetListOData()
@@ -71,6 +72,7 @@ public class ProductsController : BaseController
 
         return Ok(response);
     }
+
     [HttpGet("ProductTypes")]
     public async Task<ActionResult<List<string>>> GetList()
     {

@@ -3,8 +3,8 @@ using Application.Features.Foods.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
-using NArchitecture.Core.Application.Pipelines.Authorization;
 using MediatR;
+using NArchitecture.Core.Application.Pipelines.Authorization;
 using static Application.Features.Foods.Constants.FoodsOperationClaims;
 
 namespace Application.Features.Foods.Queries.GetById;
@@ -30,7 +30,10 @@ public class GetByIdFoodQuery : IRequest<GetByIdFoodResponse>, ISecuredRequest
 
         public async Task<GetByIdFoodResponse> Handle(GetByIdFoodQuery request, CancellationToken cancellationToken)
         {
-            Food? food = await _foodRepository.GetAsync(predicate: f => f.ProductId == request.Id, cancellationToken: cancellationToken);
+            Food? food = await _foodRepository.GetAsync(
+                predicate: f => f.ProductId == request.Id,
+                cancellationToken: cancellationToken
+            );
             await _foodBusinessRules.FoodShouldExistWhenSelected(food);
 
             GetByIdFoodResponse response = _mapper.Map<GetByIdFoodResponse>(food);

@@ -19,7 +19,7 @@ using WebAPI;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddResponseCompression(opt => opt.EnableForHttps=true);
+builder.Services.AddResponseCompression(opt => opt.EnableForHttps = true);
 
 builder.Services.AddControllers().AddOData(opt => opt.EnableQueryFeatures());
 
@@ -102,7 +102,7 @@ if (app.Environment.IsDevelopment())
 }
 
 //if (app.Environment.IsProduction())
-    app.ConfigureCustomExceptionMiddleware();
+app.ConfigureCustomExceptionMiddleware();
 
 app.UseDbMigrationApplier();
 

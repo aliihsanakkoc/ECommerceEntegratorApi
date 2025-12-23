@@ -4,8 +4,8 @@ using Application.Features.Books.Commands.Update;
 using Application.Features.Books.Queries.GetById;
 using Application.Features.Books.Queries.GetList;
 using AutoMapper;
-using NArchitecture.Core.Application.Responses;
 using Domain.Entities;
+using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
 
 namespace Application.Features.Books.Profiles;

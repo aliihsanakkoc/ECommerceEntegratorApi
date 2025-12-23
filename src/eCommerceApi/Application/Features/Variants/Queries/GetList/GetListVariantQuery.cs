@@ -2,12 +2,12 @@ using Application.Features.Variants.Constants;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
-using MediatR;
 using static Application.Features.Variants.Constants.VariantsOperationClaims;
 
 namespace Application.Features.Variants.Queries.GetList;
@@ -34,15 +34,20 @@ public class GetListVariantQuery : IRequest<GetListResponse<GetListVariantListIt
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListVariantListItemDto>> Handle(GetListVariantQuery request, CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListVariantListItemDto>> Handle(
+            GetListVariantQuery request,
+            CancellationToken cancellationToken
+        )
         {
             IPaginate<Variant> variants = await _variantRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize, 
+                size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken
             );
 
-            GetListResponse<GetListVariantListItemDto> response = _mapper.Map<GetListResponse<GetListVariantListItemDto>>(variants);
+            GetListResponse<GetListVariantListItemDto> response = _mapper.Map<GetListResponse<GetListVariantListItemDto>>(
+                variants
+            );
             return response;
         }
     }

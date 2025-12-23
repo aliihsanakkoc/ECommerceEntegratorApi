@@ -8,9 +8,11 @@ using NArchitecture.Core.Application.Pipelines.Authorization;
 using static Application.Features.Variants.Constants.VariantsOperationClaims;
 
 namespace Application.Features.Variants.ODataQuery;
+
 public class ODataVariantQuery : IRequest<IQueryable<GetListVariantListItemDto>>, ISecuredRequest
 {
-    public string[] Roles => [Admin,Read, Client];
+    public string[] Roles => [Admin, Read, Client];
+
     public class ODataVariantQueryHandler : IRequestHandler<ODataVariantQuery, IQueryable<GetListVariantListItemDto>>
     {
         private readonly IVariantRepository _variantRepository;
@@ -28,5 +30,5 @@ public class ODataVariantQuery : IRequest<IQueryable<GetListVariantListItemDto>>
 
             return Task.FromResult(variants.ProjectTo<GetListVariantListItemDto>(_mapper.ConfigurationProvider));
         }
-    }   
+    }
 }

@@ -7,7 +7,6 @@ namespace Persistence.Repositories;
 
 public class BookRepository : EfRepositoryBase<Book, int, BaseDbContext>, IBookRepository
 {
-    public BookRepository(BaseDbContext context) : base(context)
-    {
-    }
+    public BookRepository(BaseDbContext context)
+        : base(context) { }
 }

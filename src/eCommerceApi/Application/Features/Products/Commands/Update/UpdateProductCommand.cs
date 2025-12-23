@@ -3,16 +3,21 @@ using Application.Features.Products.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
-using MediatR;
 using static Application.Features.Products.Constants.ProductsOperationClaims;
 
 namespace Application.Features.Products.Commands.Update;
 
-public class UpdateProductCommand : IRequest<UpdatedProductResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class UpdateProductCommand
+    : IRequest<UpdatedProductResponse>,
+        ISecuredRequest,
+        ICacheRemoverRequest,
+        ILoggableRequest,
+        ITransactionalRequest
 {
     public int Id { get; set; }
     public required string ProductCode { get; set; }
@@ -35,8 +40,11 @@ public class UpdateProductCommand : IRequest<UpdatedProductResponse>, ISecuredRe
         private readonly IProductRepository _productRepository;
         private readonly ProductBusinessRules _productBusinessRules;
 
-        public UpdateProductCommandHandler(IMapper mapper, IProductRepository productRepository,
-                                         ProductBusinessRules productBusinessRules)
+        public UpdateProductCommandHandler(
+            IMapper mapper,
+            IProductRepository productRepository,
+            ProductBusinessRules productBusinessRules
+        )
         {
             _mapper = mapper;
             _productRepository = productRepository;
@@ -45,7 +53,10 @@ public class UpdateProductCommand : IRequest<UpdatedProductResponse>, ISecuredRe
 
         public async Task<UpdatedProductResponse> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
         {
-            Product? product = await _productRepository.GetAsync(predicate: p => p.Id == request.Id, cancellationToken: cancellationToken);
+            Product? product = await _productRepository.GetAsync(
+                predicate: p => p.Id == request.Id,
+                cancellationToken: cancellationToken
+            );
             await _productBusinessRules.ProductShouldExistWhenSelected(product);
             product = _mapper.Map(request, product);
 

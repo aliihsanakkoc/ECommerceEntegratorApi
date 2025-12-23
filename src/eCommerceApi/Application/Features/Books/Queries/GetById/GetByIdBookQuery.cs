@@ -3,8 +3,8 @@ using Application.Features.Books.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
-using NArchitecture.Core.Application.Pipelines.Authorization;
 using MediatR;
+using NArchitecture.Core.Application.Pipelines.Authorization;
 using static Application.Features.Books.Constants.BooksOperationClaims;
 
 namespace Application.Features.Books.Queries.GetById;
@@ -30,7 +30,10 @@ public class GetByIdBookQuery : IRequest<GetByIdBookResponse>, ISecuredRequest
 
         public async Task<GetByIdBookResponse> Handle(GetByIdBookQuery request, CancellationToken cancellationToken)
         {
-            Book? book = await _bookRepository.GetAsync(predicate: b => b.ProductId == request.Id, cancellationToken: cancellationToken);
+            Book? book = await _bookRepository.GetAsync(
+                predicate: b => b.ProductId == request.Id,
+                cancellationToken: cancellationToken
+            );
             await _bookBusinessRules.BookShouldExistWhenSelected(book);
 
             GetByIdBookResponse response = _mapper.Map<GetByIdBookResponse>(book);

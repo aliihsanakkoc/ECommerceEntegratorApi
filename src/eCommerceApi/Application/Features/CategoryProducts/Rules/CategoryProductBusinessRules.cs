@@ -1,9 +1,9 @@
 using Application.Features.CategoryProducts.Constants;
 using Application.Services.Repositories;
+using Domain.Entities;
 using NArchitecture.Core.Application.Rules;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 using NArchitecture.Core.Localization.Abstraction;
-using Domain.Entities;
 
 namespace Application.Features.CategoryProducts.Rules;
 
@@ -12,7 +12,10 @@ public class CategoryProductBusinessRules : BaseBusinessRules
     private readonly ICategoryProductRepository _categoryProductRepository;
     private readonly ILocalizationService _localizationService;
 
-    public CategoryProductBusinessRules(ICategoryProductRepository categoryProductRepository, ILocalizationService localizationService)
+    public CategoryProductBusinessRules(
+        ICategoryProductRepository categoryProductRepository,
+        ILocalizationService localizationService
+    )
     {
         _categoryProductRepository = categoryProductRepository;
         _localizationService = localizationService;

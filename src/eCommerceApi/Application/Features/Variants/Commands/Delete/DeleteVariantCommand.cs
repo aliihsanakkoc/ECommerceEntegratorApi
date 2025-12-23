@@ -4,16 +4,21 @@ using Application.Features.Variants.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
-using MediatR;
 using static Application.Features.Variants.Constants.VariantsOperationClaims;
 
 namespace Application.Features.Variants.Commands.Delete;
 
-public class DeleteVariantCommand : IRequest<DeletedVariantResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class DeleteVariantCommand
+    : IRequest<DeletedVariantResponse>,
+        ISecuredRequest,
+        ICacheRemoverRequest,
+        ILoggableRequest,
+        ITransactionalRequest
 {
     public int Id { get; set; }
 
@@ -29,8 +34,11 @@ public class DeleteVariantCommand : IRequest<DeletedVariantResponse>, ISecuredRe
         private readonly IVariantRepository _variantRepository;
         private readonly VariantBusinessRules _variantBusinessRules;
 
-        public DeleteVariantCommandHandler(IMapper mapper, IVariantRepository variantRepository,
-                                         VariantBusinessRules variantBusinessRules)
+        public DeleteVariantCommandHandler(
+            IMapper mapper,
+            IVariantRepository variantRepository,
+            VariantBusinessRules variantBusinessRules
+        )
         {
             _mapper = mapper;
             _variantRepository = variantRepository;
@@ -41,7 +49,10 @@ public class DeleteVariantCommand : IRequest<DeletedVariantResponse>, ISecuredRe
         {
             await _variantBusinessRules.VariantShouldNotTopVariant(request.Id, cancellationToken);
 
-            Variant? variant = await _variantRepository.GetAsync(predicate: v => v.Id == request.Id, cancellationToken: cancellationToken);
+            Variant? variant = await _variantRepository.GetAsync(
+                predicate: v => v.Id == request.Id,
+                cancellationToken: cancellationToken
+            );
             await _variantBusinessRules.VariantShouldExistWhenSelected(variant);
 
             await _variantRepository.DeleteAsync(variant!);

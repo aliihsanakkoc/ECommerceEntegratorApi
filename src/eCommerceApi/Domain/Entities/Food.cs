@@ -2,6 +2,7 @@
 using NArchitecture.Core.Persistence.Repositories;
 
 namespace Domain.Entities;
+
 public class Food : Entity<int>, IProduct
 {
     public string StorageCondition { get; set; } = default!;

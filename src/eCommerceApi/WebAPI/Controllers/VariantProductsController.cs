@@ -1,15 +1,15 @@
 using Application.Features.VariantProducts.Commands.Create;
 using Application.Features.VariantProducts.Commands.Delete;
 using Application.Features.VariantProducts.Commands.Update;
+using Application.Features.VariantProducts.ODataQuery;
 using Application.Features.VariantProducts.Queries.GetById;
 using Application.Features.VariantProducts.Queries.GetList;
+using Application.Features.VariantProducts.RangeCommands;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
-using Microsoft.AspNetCore.Mvc;
-using Application.Features.VariantProducts.ODataQuery;
-using Microsoft.AspNetCore.OData.Query;
-using MediatR;
-using Application.Features.VariantProducts.RangeCommands;
 
 namespace WebAPI.Controllers;
 
@@ -70,7 +70,9 @@ public class VariantProductsController : BaseController
     }
 
     [HttpGet]
-    public async Task<ActionResult<GetListResponse<GetListVariantProductListItemDto>>> GetList([FromQuery] PageRequest pageRequest)
+    public async Task<ActionResult<GetListResponse<GetListVariantProductListItemDto>>> GetList(
+        [FromQuery] PageRequest pageRequest
+    )
     {
         GetListVariantProductQuery query = new() { PageRequest = pageRequest };
 
@@ -78,11 +80,12 @@ public class VariantProductsController : BaseController
 
         return Ok(response);
     }
+
     [HttpGet("OData")]
     [EnableQuery]
     public async Task<ActionResult<IQueryable<GetListVariantProductListItemDto>>> GetList()
     {
-        ODataVariantProductQuery query = new() ;
+        ODataVariantProductQuery query = new();
 
         IQueryable<GetListVariantProductListItemDto> response = await Mediator.Send(query);
 

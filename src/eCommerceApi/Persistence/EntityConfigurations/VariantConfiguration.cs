@@ -20,12 +20,13 @@ public class VariantConfiguration : IEntityTypeConfiguration<Variant>
 
         builder.HasQueryFilter(v => !v.DeletedDate.HasValue);
 
-        builder.HasOne(v => v.TopVariant)
+        builder
+            .HasOne(v => v.TopVariant)
             .WithMany(v => v.SubVariants)
             .HasForeignKey(v => v.TopVariantId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasIndex(v => v.VariantName).IsUnique();    
+        builder.HasIndex(v => v.VariantName).IsUnique();
 
         builder.HasData(
             new Variant

@@ -2,12 +2,12 @@ using Application.Features.Foods.Constants;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
-using MediatR;
 using static Application.Features.Foods.Constants.FoodsOperationClaims;
 
 namespace Application.Features.Foods.Queries.GetList;
@@ -34,11 +34,14 @@ public class GetListFoodQuery : IRequest<GetListResponse<GetListFoodListItemDto>
             _mapper = mapper;
         }
 
-        public async Task<GetListResponse<GetListFoodListItemDto>> Handle(GetListFoodQuery request, CancellationToken cancellationToken)
+        public async Task<GetListResponse<GetListFoodListItemDto>> Handle(
+            GetListFoodQuery request,
+            CancellationToken cancellationToken
+        )
         {
             IPaginate<Food> foods = await _foodRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
-                size: request.PageRequest.PageSize, 
+                size: request.PageRequest.PageSize,
                 cancellationToken: cancellationToken
             );
 

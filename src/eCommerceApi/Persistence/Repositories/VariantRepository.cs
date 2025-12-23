@@ -7,7 +7,6 @@ namespace Persistence.Repositories;
 
 public class VariantRepository : EfRepositoryBase<Variant, int, BaseDbContext>, IVariantRepository
 {
-    public VariantRepository(BaseDbContext context) : base(context)
-    {
-    }
+    public VariantRepository(BaseDbContext context)
+        : base(context) { }
 }

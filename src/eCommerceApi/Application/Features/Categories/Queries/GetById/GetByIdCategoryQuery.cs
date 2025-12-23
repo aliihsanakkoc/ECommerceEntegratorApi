@@ -3,8 +3,8 @@ using Application.Features.Categories.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
-using NArchitecture.Core.Application.Pipelines.Authorization;
 using MediatR;
+using NArchitecture.Core.Application.Pipelines.Authorization;
 using static Application.Features.Categories.Constants.CategoriesOperationClaims;
 
 namespace Application.Features.Categories.Queries.GetById;
@@ -21,7 +21,11 @@ public class GetByIdCategoryQuery : IRequest<GetByIdCategoryResponse>, ISecuredR
         private readonly ICategoryRepository _categoryRepository;
         private readonly CategoryBusinessRules _categoryBusinessRules;
 
-        public GetByIdCategoryQueryHandler(IMapper mapper, ICategoryRepository categoryRepository, CategoryBusinessRules categoryBusinessRules)
+        public GetByIdCategoryQueryHandler(
+            IMapper mapper,
+            ICategoryRepository categoryRepository,
+            CategoryBusinessRules categoryBusinessRules
+        )
         {
             _mapper = mapper;
             _categoryRepository = categoryRepository;
@@ -30,7 +34,10 @@ public class GetByIdCategoryQuery : IRequest<GetByIdCategoryResponse>, ISecuredR
 
         public async Task<GetByIdCategoryResponse> Handle(GetByIdCategoryQuery request, CancellationToken cancellationToken)
         {
-            Category? category = await _categoryRepository.GetAsync(predicate: c => c.Id == request.Id, cancellationToken: cancellationToken);
+            Category? category = await _categoryRepository.GetAsync(
+                predicate: c => c.Id == request.Id,
+                cancellationToken: cancellationToken
+            );
             await _categoryBusinessRules.CategoryShouldExistWhenSelected(category);
 
             GetByIdCategoryResponse response = _mapper.Map<GetByIdCategoryResponse>(category);

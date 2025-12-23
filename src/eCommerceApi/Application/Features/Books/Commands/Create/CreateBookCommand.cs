@@ -3,16 +3,21 @@ using Application.Features.Books.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
-using MediatR;
 using static Application.Features.Books.Constants.BooksOperationClaims;
 
 namespace Application.Features.Books.Commands.Create;
 
-public class CreateBookCommand : IRequest<CreatedBookResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class CreateBookCommand
+    : IRequest<CreatedBookResponse>,
+        ISecuredRequest,
+        ICacheRemoverRequest,
+        ILoggableRequest,
+        ITransactionalRequest
 {
     public required string Title { get; set; }
     public required string Author { get; set; }
@@ -34,8 +39,7 @@ public class CreateBookCommand : IRequest<CreatedBookResponse>, ISecuredRequest,
         private readonly IBookRepository _bookRepository;
         private readonly BookBusinessRules _bookBusinessRules;
 
-        public CreateBookCommandHandler(IMapper mapper, IBookRepository bookRepository,
-                                         BookBusinessRules bookBusinessRules)
+        public CreateBookCommandHandler(IMapper mapper, IBookRepository bookRepository, BookBusinessRules bookBusinessRules)
         {
             _mapper = mapper;
             _bookRepository = bookRepository;

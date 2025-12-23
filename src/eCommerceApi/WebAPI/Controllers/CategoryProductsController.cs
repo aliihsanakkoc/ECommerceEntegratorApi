@@ -1,15 +1,15 @@
 using Application.Features.CategoryProducts.Commands.Create;
 using Application.Features.CategoryProducts.Commands.Delete;
 using Application.Features.CategoryProducts.Commands.Update;
+using Application.Features.CategoryProducts.ODataQuery;
 using Application.Features.CategoryProducts.Queries.GetById;
 using Application.Features.CategoryProducts.Queries.GetList;
+using Application.Features.CategoryProducts.RangeCommands;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
-using Microsoft.AspNetCore.Mvc;
-using MediatR;
-using Application.Features.CategoryProducts.RangeCommands;
-using Microsoft.AspNetCore.OData.Query;
-using Application.Features.CategoryProducts.ODataQuery;
 
 namespace WebAPI.Controllers;
 
@@ -32,6 +32,7 @@ public class CategoryProductsController : BaseController
 
         return Ok(response);
     }
+
     [HttpPost("DeleteRange")]
     public async Task<ActionResult<Unit>> DeleteRange([FromBody] DeleteRangeCategoryProductsCommand command)
     {
@@ -39,6 +40,7 @@ public class CategoryProductsController : BaseController
 
         return Ok(response);
     }
+
     [HttpPut]
     public async Task<ActionResult<UpdatedCategoryProductResponse>> Update([FromBody] UpdateCategoryProductCommand command)
     {
@@ -68,7 +70,9 @@ public class CategoryProductsController : BaseController
     }
 
     [HttpGet]
-    public async Task<ActionResult<GetListResponse<GetListCategoryProductListItemDto>>> GetList([FromQuery] PageRequest pageRequest)
+    public async Task<ActionResult<GetListResponse<GetListCategoryProductListItemDto>>> GetList(
+        [FromQuery] PageRequest pageRequest
+    )
     {
         GetListCategoryProductQuery query = new() { PageRequest = pageRequest };
 
@@ -76,11 +80,12 @@ public class CategoryProductsController : BaseController
 
         return Ok(response);
     }
+
     [HttpGet("OData")]
-    [EnableQuery]   
+    [EnableQuery]
     public async Task<ActionResult<IQueryable<GetListCategoryProductListItemDto>>> GetList()
     {
-        ODataCategoryProductQuery query = new() ;
+        ODataCategoryProductQuery query = new();
 
         IQueryable<GetListCategoryProductListItemDto> response = await Mediator.Send(query);
 

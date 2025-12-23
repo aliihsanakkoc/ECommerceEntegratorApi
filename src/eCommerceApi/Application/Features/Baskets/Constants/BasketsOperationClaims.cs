@@ -1,4 +1,5 @@
 ﻿namespace Application.Features.Baskets.Constants;
+
 public static class BasketsOperationClaims
 {
     private const string _section = "Baskets";

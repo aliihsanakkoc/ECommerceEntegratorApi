@@ -7,7 +7,6 @@ namespace Persistence.Repositories;
 
 public class ClothingRepository : EfRepositoryBase<Clothing, int, BaseDbContext>, IClothingRepository
 {
-    public ClothingRepository(BaseDbContext context) : base(context)
-    {
-    }
+    public ClothingRepository(BaseDbContext context)
+        : base(context) { }
 }

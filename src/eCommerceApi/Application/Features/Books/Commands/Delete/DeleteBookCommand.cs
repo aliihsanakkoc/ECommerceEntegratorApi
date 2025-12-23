@@ -4,16 +4,21 @@ using Application.Features.Books.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
-using MediatR;
 using static Application.Features.Books.Constants.BooksOperationClaims;
 
 namespace Application.Features.Books.Commands.Delete;
 
-public class DeleteBookCommand : IRequest<DeletedBookResponse>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class DeleteBookCommand
+    : IRequest<DeletedBookResponse>,
+        ISecuredRequest,
+        ICacheRemoverRequest,
+        ILoggableRequest,
+        ITransactionalRequest
 {
     public int Id { get; set; }
 
@@ -29,8 +34,7 @@ public class DeleteBookCommand : IRequest<DeletedBookResponse>, ISecuredRequest,
         private readonly IBookRepository _bookRepository;
         private readonly BookBusinessRules _bookBusinessRules;
 
-        public DeleteBookCommandHandler(IMapper mapper, IBookRepository bookRepository,
-                                         BookBusinessRules bookBusinessRules)
+        public DeleteBookCommandHandler(IMapper mapper, IBookRepository bookRepository, BookBusinessRules bookBusinessRules)
         {
             _mapper = mapper;
             _bookRepository = bookRepository;

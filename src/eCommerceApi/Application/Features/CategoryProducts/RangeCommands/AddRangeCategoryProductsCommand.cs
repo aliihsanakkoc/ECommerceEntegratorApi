@@ -3,16 +3,21 @@ using Application.Features.CategoryProducts.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using MediatR;
 using NArchitecture.Core.Application.Pipelines.Authorization;
 using NArchitecture.Core.Application.Pipelines.Caching;
 using NArchitecture.Core.Application.Pipelines.Logging;
 using NArchitecture.Core.Application.Pipelines.Transaction;
-using MediatR;
 using static Application.Features.CategoryProducts.Constants.CategoryProductsOperationClaims;
 
 namespace Application.Features.CategoryProducts.RangeCommands;
 
-public class AddRangeCategoryProductsCommand : IRequest<Unit>, ISecuredRequest, ICacheRemoverRequest, ILoggableRequest, ITransactionalRequest
+public class AddRangeCategoryProductsCommand
+    : IRequest<Unit>,
+        ISecuredRequest,
+        ICacheRemoverRequest,
+        ILoggableRequest,
+        ITransactionalRequest
 {
     public required int[] CategoryIds { get; set; }
     public required int ProductId { get; set; }

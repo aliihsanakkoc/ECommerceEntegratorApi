@@ -17,8 +17,7 @@ namespace Persistence.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false).Annotation("SqlServer:Identity", "1, 1"),
                     SingleCategoryName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     FullCategoryName = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     IsProductCategorization = table.Column<bool>(type: "bit", nullable: false),
@@ -36,15 +35,16 @@ namespace Persistence.Migrations
                         column: x => x.TopCategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
+                        onDelete: ReferentialAction.Restrict
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "OperationClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false).Annotation("SqlServer:Identity", "1, 1"),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -53,14 +53,14 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OperationClaims", x => x.Id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false).Annotation("SqlServer:Identity", "1, 1"),
                     ProductCode = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     ProductName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     ProductDescription = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
@@ -75,7 +75,8 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Products", x => x.Id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Users",
@@ -93,14 +94,14 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Variants",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false).Annotation("SqlServer:Identity", "1, 1"),
                     VariantName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     TopVariantName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     TopVariantId = table.Column<int>(type: "int", nullable: false),
@@ -116,15 +117,16 @@ namespace Persistence.Migrations
                         column: x => x.TopVariantId,
                         principalTable: "Variants",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
+                        onDelete: ReferentialAction.Restrict
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Books",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false).Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Author = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     ISBN = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
@@ -144,15 +146,16 @@ namespace Persistence.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "CategoryProducts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false).Annotation("SqlServer:Identity", "1, 1"),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -167,21 +170,23 @@ namespace Persistence.Migrations
                         column: x => x.CategoryId,
                         principalTable: "Categories",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade
+                    );
                     table.ForeignKey(
                         name: "FK_CategoryProducts_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Clothings",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false).Annotation("SqlServer:Identity", "1, 1"),
                     MadeIn = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     FiberComposition = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     LaundryLabel = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
@@ -199,15 +204,16 @@ namespace Persistence.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Foods",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false).Annotation("SqlServer:Identity", "1, 1"),
                     StorageCondition = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     PreparationTechnique = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     ExpiryDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -224,8 +230,10 @@ namespace Persistence.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "EmailAuthenticators",
@@ -247,8 +255,10 @@ namespace Persistence.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "OtpAuthenticators",
@@ -270,8 +280,10 @@ namespace Persistence.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "RefreshTokens",
@@ -298,8 +310,10 @@ namespace Persistence.Migrations
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "UserOperationClaims",
@@ -320,21 +334,23 @@ namespace Persistence.Migrations
                         column: x => x.OperationClaimId,
                         principalTable: "OperationClaims",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade
+                    );
                     table.ForeignKey(
                         name: "FK_UserOperationClaims_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "VariantProducts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false).Annotation("SqlServer:Identity", "1, 1"),
                     VariantId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -349,19 +365,45 @@ namespace Persistence.Migrations
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade
+                    );
                     table.ForeignKey(
                         name: "FK_VariantProducts_Variants_VariantId",
                         column: x => x.VariantId,
                         principalTable: "Variants",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "Id", "CreatedDate", "DeletedDate", "FullCategoryName", "IsProductCategorization", "SingleCategoryName", "TopCategoryId", "TopCategoryName", "UpdatedDate" },
-                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Top Category", false, "Top Category", 1, "Seed Top Category", null });
+                columns: new[]
+                {
+                    "Id",
+                    "CreatedDate",
+                    "DeletedDate",
+                    "FullCategoryName",
+                    "IsProductCategorization",
+                    "SingleCategoryName",
+                    "TopCategoryId",
+                    "TopCategoryName",
+                    "UpdatedDate"
+                },
+                values: new object[]
+                {
+                    1,
+                    new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                    null,
+                    "Top Category",
+                    false,
+                    "Top Category",
+                    1,
+                    "Seed Top Category",
+                    null
+                }
+            );
 
             migrationBuilder.InsertData(
                 table: "OperationClaims",
@@ -451,155 +493,351 @@ namespace Persistence.Migrations
                     { 81, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Foods.Create", null },
                     { 82, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Foods.Update", null },
                     { 83, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Foods.Delete", null }
-                });
+                }
+            );
 
             migrationBuilder.InsertData(
                 table: "Users",
-                columns: new[] { "Id", "AuthenticatorType", "CreatedDate", "DeletedDate", "Email", "PasswordHash", "PasswordSalt", "UpdatedDate" },
-                values: new object[] { new Guid("c58bfc3c-97bc-4334-aa88-faa9d3b56780"), 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "narch@kodlama.io", new byte[] { 255, 44, 33, 254, 90, 195, 171, 59, 201, 194, 162, 178, 136, 104, 176, 221, 106, 188, 238, 227, 23, 55, 139, 139, 209, 135, 53, 136, 214, 20, 58, 110, 55, 231, 31, 255, 47, 87, 195, 172, 27, 81, 176, 188, 233, 129, 44, 202, 189, 207, 141, 104, 54, 135, 235, 1, 7, 89, 102, 29, 131, 171, 36, 63 }, new byte[] { 141, 145, 223, 230, 72, 55, 211, 197, 57, 133, 92, 203, 53, 161, 147, 59, 34, 131, 242, 210, 114, 22, 249, 1, 173, 74, 251, 225, 76, 102, 115, 116, 212, 104, 122, 111, 207, 87, 146, 60, 102, 187, 94, 111, 106, 237, 84, 6, 241, 242, 15, 5, 70, 30, 228, 115, 77, 138, 187, 1, 239, 6, 200, 37, 27, 208, 126, 216, 31, 25, 246, 74, 94, 246, 229, 25, 13, 194, 146, 180, 193, 31, 203, 104, 147, 115, 178, 100, 72, 103, 253, 95, 213, 204, 163, 130, 32, 80, 164, 98, 8, 11, 92, 62, 63, 142, 223, 48, 255, 99, 221, 173, 81, 25, 198, 124, 209, 238, 222, 233, 90, 194, 0, 215, 78, 173, 128, 9 }, null });
+                columns: new[]
+                {
+                    "Id",
+                    "AuthenticatorType",
+                    "CreatedDate",
+                    "DeletedDate",
+                    "Email",
+                    "PasswordHash",
+                    "PasswordSalt",
+                    "UpdatedDate"
+                },
+                values: new object[]
+                {
+                    new Guid("c58bfc3c-97bc-4334-aa88-faa9d3b56780"),
+                    0,
+                    new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                    null,
+                    "narch@kodlama.io",
+                    new byte[]
+                    {
+                        255,
+                        44,
+                        33,
+                        254,
+                        90,
+                        195,
+                        171,
+                        59,
+                        201,
+                        194,
+                        162,
+                        178,
+                        136,
+                        104,
+                        176,
+                        221,
+                        106,
+                        188,
+                        238,
+                        227,
+                        23,
+                        55,
+                        139,
+                        139,
+                        209,
+                        135,
+                        53,
+                        136,
+                        214,
+                        20,
+                        58,
+                        110,
+                        55,
+                        231,
+                        31,
+                        255,
+                        47,
+                        87,
+                        195,
+                        172,
+                        27,
+                        81,
+                        176,
+                        188,
+                        233,
+                        129,
+                        44,
+                        202,
+                        189,
+                        207,
+                        141,
+                        104,
+                        54,
+                        135,
+                        235,
+                        1,
+                        7,
+                        89,
+                        102,
+                        29,
+                        131,
+                        171,
+                        36,
+                        63
+                    },
+                    new byte[]
+                    {
+                        141,
+                        145,
+                        223,
+                        230,
+                        72,
+                        55,
+                        211,
+                        197,
+                        57,
+                        133,
+                        92,
+                        203,
+                        53,
+                        161,
+                        147,
+                        59,
+                        34,
+                        131,
+                        242,
+                        210,
+                        114,
+                        22,
+                        249,
+                        1,
+                        173,
+                        74,
+                        251,
+                        225,
+                        76,
+                        102,
+                        115,
+                        116,
+                        212,
+                        104,
+                        122,
+                        111,
+                        207,
+                        87,
+                        146,
+                        60,
+                        102,
+                        187,
+                        94,
+                        111,
+                        106,
+                        237,
+                        84,
+                        6,
+                        241,
+                        242,
+                        15,
+                        5,
+                        70,
+                        30,
+                        228,
+                        115,
+                        77,
+                        138,
+                        187,
+                        1,
+                        239,
+                        6,
+                        200,
+                        37,
+                        27,
+                        208,
+                        126,
+                        216,
+                        31,
+                        25,
+                        246,
+                        74,
+                        94,
+                        246,
+                        229,
+                        25,
+                        13,
+                        194,
+                        146,
+                        180,
+                        193,
+                        31,
+                        203,
+                        104,
+                        147,
+                        115,
+                        178,
+                        100,
+                        72,
+                        103,
+                        253,
+                        95,
+                        213,
+                        204,
+                        163,
+                        130,
+                        32,
+                        80,
+                        164,
+                        98,
+                        8,
+                        11,
+                        92,
+                        62,
+                        63,
+                        142,
+                        223,
+                        48,
+                        255,
+                        99,
+                        221,
+                        173,
+                        81,
+                        25,
+                        198,
+                        124,
+                        209,
+                        238,
+                        222,
+                        233,
+                        90,
+                        194,
+                        0,
+                        215,
+                        78,
+                        173,
+                        128,
+                        9
+                    },
+                    null
+                }
+            );
 
             migrationBuilder.InsertData(
                 table: "Variants",
-                columns: new[] { "Id", "CreatedDate", "DeletedDate", "TopVariantId", "TopVariantName", "UpdatedDate", "VariantName" },
-                values: new object[] { 1, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 1, "Seed", null, "Variant" });
+                columns: new[]
+                {
+                    "Id",
+                    "CreatedDate",
+                    "DeletedDate",
+                    "TopVariantId",
+                    "TopVariantName",
+                    "UpdatedDate",
+                    "VariantName"
+                },
+                values: new object[]
+                {
+                    1,
+                    new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                    null,
+                    1,
+                    "Seed",
+                    null,
+                    "Variant"
+                }
+            );
 
             migrationBuilder.InsertData(
                 table: "UserOperationClaims",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "OperationClaimId", "UpdatedDate", "UserId" },
-                values: new object[] { new Guid("8534159e-c9d0-465d-b7ce-139f60674bb3"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 1, null, new Guid("c58bfc3c-97bc-4334-aa88-faa9d3b56780") });
+                values: new object[]
+                {
+                    new Guid("8534159e-c9d0-465d-b7ce-139f60674bb3"),
+                    new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                    null,
+                    1,
+                    null,
+                    new Guid("c58bfc3c-97bc-4334-aa88-faa9d3b56780")
+                }
+            );
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Books_ProductId",
-                table: "Books",
-                column: "ProductId",
-                unique: true);
+            migrationBuilder.CreateIndex(name: "IX_Books_ProductId", table: "Books", column: "ProductId", unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Categories_FullCategoryName",
                 table: "Categories",
                 column: "FullCategoryName",
-                unique: true);
+                unique: true
+            );
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Categories_TopCategoryId",
-                table: "Categories",
-                column: "TopCategoryId");
+            migrationBuilder.CreateIndex(name: "IX_Categories_TopCategoryId", table: "Categories", column: "TopCategoryId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_CategoryProducts_CategoryId",
-                table: "CategoryProducts",
-                column: "CategoryId");
+            migrationBuilder.CreateIndex(name: "IX_CategoryProducts_CategoryId", table: "CategoryProducts", column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CategoryProducts_ProductId_CategoryId",
                 table: "CategoryProducts",
                 columns: new[] { "ProductId", "CategoryId" },
-                unique: true);
+                unique: true
+            );
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Clothings_ProductId",
-                table: "Clothings",
-                column: "ProductId",
-                unique: true);
+            migrationBuilder.CreateIndex(name: "IX_Clothings_ProductId", table: "Clothings", column: "ProductId", unique: true);
 
-            migrationBuilder.CreateIndex(
-                name: "IX_EmailAuthenticators_UserId",
-                table: "EmailAuthenticators",
-                column: "UserId");
+            migrationBuilder.CreateIndex(name: "IX_EmailAuthenticators_UserId", table: "EmailAuthenticators", column: "UserId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Foods_ProductId",
-                table: "Foods",
-                column: "ProductId",
-                unique: true);
+            migrationBuilder.CreateIndex(name: "IX_Foods_ProductId", table: "Foods", column: "ProductId", unique: true);
 
-            migrationBuilder.CreateIndex(
-                name: "IX_OtpAuthenticators_UserId",
-                table: "OtpAuthenticators",
-                column: "UserId");
+            migrationBuilder.CreateIndex(name: "IX_OtpAuthenticators_UserId", table: "OtpAuthenticators", column: "UserId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_RefreshTokens_UserId",
-                table: "RefreshTokens",
-                column: "UserId");
+            migrationBuilder.CreateIndex(name: "IX_RefreshTokens_UserId", table: "RefreshTokens", column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserOperationClaims_OperationClaimId",
                 table: "UserOperationClaims",
-                column: "OperationClaimId");
+                column: "OperationClaimId"
+            );
 
-            migrationBuilder.CreateIndex(
-                name: "IX_UserOperationClaims_UserId",
-                table: "UserOperationClaims",
-                column: "UserId");
+            migrationBuilder.CreateIndex(name: "IX_UserOperationClaims_UserId", table: "UserOperationClaims", column: "UserId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_VariantProducts_ProductId",
-                table: "VariantProducts",
-                column: "ProductId");
+            migrationBuilder.CreateIndex(name: "IX_VariantProducts_ProductId", table: "VariantProducts", column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_VariantProducts_VariantId_ProductId",
                 table: "VariantProducts",
                 columns: new[] { "VariantId", "ProductId" },
-                unique: true);
+                unique: true
+            );
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Variants_TopVariantId",
-                table: "Variants",
-                column: "TopVariantId");
+            migrationBuilder.CreateIndex(name: "IX_Variants_TopVariantId", table: "Variants", column: "TopVariantId");
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Variants_VariantName",
-                table: "Variants",
-                column: "VariantName",
-                unique: true);
+            migrationBuilder.CreateIndex(name: "IX_Variants_VariantName", table: "Variants", column: "VariantName", unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Books");
+            migrationBuilder.DropTable(name: "Books");
 
-            migrationBuilder.DropTable(
-                name: "CategoryProducts");
+            migrationBuilder.DropTable(name: "CategoryProducts");
 
-            migrationBuilder.DropTable(
-                name: "Clothings");
+            migrationBuilder.DropTable(name: "Clothings");
 
-            migrationBuilder.DropTable(
-                name: "EmailAuthenticators");
+            migrationBuilder.DropTable(name: "EmailAuthenticators");
 
-            migrationBuilder.DropTable(
-                name: "Foods");
+            migrationBuilder.DropTable(name: "Foods");
 
-            migrationBuilder.DropTable(
-                name: "OtpAuthenticators");
+            migrationBuilder.DropTable(name: "OtpAuthenticators");
 
-            migrationBuilder.DropTable(
-                name: "RefreshTokens");
+            migrationBuilder.DropTable(name: "RefreshTokens");
 
-            migrationBuilder.DropTable(
-                name: "UserOperationClaims");
+            migrationBuilder.DropTable(name: "UserOperationClaims");
 
-            migrationBuilder.DropTable(
-                name: "VariantProducts");
+            migrationBuilder.DropTable(name: "VariantProducts");
 
-            migrationBuilder.DropTable(
-                name: "Categories");
+            migrationBuilder.DropTable(name: "Categories");
 
-            migrationBuilder.DropTable(
-                name: "OperationClaims");
+            migrationBuilder.DropTable(name: "OperationClaims");
 
-            migrationBuilder.DropTable(
-                name: "Users");
+            migrationBuilder.DropTable(name: "Users");
 
-            migrationBuilder.DropTable(
-                name: "Products");
+            migrationBuilder.DropTable(name: "Products");
 
-            migrationBuilder.DropTable(
-                name: "Variants");
+            migrationBuilder.DropTable(name: "Variants");
         }
     }
 }
